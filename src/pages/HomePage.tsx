@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { AuthModal } from '@/components/AuthModal';
 import { UserMenu } from '@/components/UserMenu';
 import { Service } from '@/types/service';
-import { listServices } from '@/services/api';
+import { listServices, initializeMockData } from '@/services/api';
 import { useAuth } from '@/hooks/useAuth';
 import { UserPlus } from 'lucide-react';
 interface HomePageProps {
@@ -33,6 +33,11 @@ export const HomePage: React.FC<HomePageProps> = ({
   const loadServices = async () => {
     setIsLoading(true);
     try {
+      // Inicializar datos de prueba si es necesario (solo en desarrollo)
+      if (process.env.NODE_ENV === 'development') {
+        await initializeMockData();
+      }
+      
       const filters = {
         search: searchQuery || undefined,
         category: selectedCategory,
