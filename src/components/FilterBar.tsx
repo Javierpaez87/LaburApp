@@ -22,6 +22,15 @@ const CITIES = [
   'La Plata',
   'Mar del Plata'
 ];
+
+export const FilterBar: React.FC<FilterBarProps> = ({
+  selectedCategory,
+  selectedCity,
+  onCategoryChange,
+  onCityChange,
+  onClearFilters,
+  className
+}) => {
   const hasFilters = selectedCategory || selectedCity;
 
   return (
