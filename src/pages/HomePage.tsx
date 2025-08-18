@@ -21,7 +21,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   onPublishService,
   onManageServices 
 }) => {
-  const { user, isAuthenticated, signInWithGoogle, signOut } = useAuth();
+  const { user, isAuthenticated, signInWithGoogle, signUpWithEmail, signInWithEmail, signOut } = useAuth();
   const [services, setServices] = useState<Service[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -85,6 +85,34 @@ export const HomePage: React.FC<HomePageProps> = ({
       onPublishService();
     } catch (error) {
       console.error('Error signing in:', error);
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
+  const handleSignUpWithEmail = async (email: string, password: string, name: string) => {
+    setAuthLoading(true);
+    try {
+      await signUpWithEmail(email, password, name);
+      setShowAuthModal(false);
+      onPublishService();
+    } catch (error) {
+      console.error('Error signing up:', error);
+      throw error;
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
+  const handleSignInWithEmail = async (email: string, password: string) => {
+    setAuthLoading(true);
+    try {
+      await signInWithEmail(email, password);
+      setShowAuthModal(false);
+      onPublishService();
+    } catch (error) {
+      console.error('Error signing in:', error);
+      throw error;
     } finally {
       setAuthLoading(false);
     }
@@ -218,6 +246,8 @@ export const HomePage: React.FC<HomePageProps> = ({
         isOpen={showAuthModal}
         onClose={() => setShowAuthModal(false)}
         onSignInWithGoogle={handleSignIn}
+        onSignUpWithEmail={handleSignUpWithEmail}
+        onSignInWithEmail={handleSignInWithEmail}
         isLoading={authLoading}
       />
     </div>

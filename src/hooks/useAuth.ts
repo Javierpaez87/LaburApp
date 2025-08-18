@@ -3,7 +3,9 @@ import { User } from '@/types/user';
 import {
   onAuthStateChanged,
   signInWithGoogle as authSignInWithGoogle,
-  signOut as authSignOut
+  signOut as authSignOut,
+  signUpWithEmail as authSignUpWithEmail,
+  signInWithEmail as authSignInWithEmail
 } from '@/services/auth';
 
 export const useAuth = () => {
@@ -51,6 +53,8 @@ export const useAuth = () => {
     isLoading,
     isAuthenticated: !!user,
     signInWithGoogle,
+    signUpWithEmail,
+    signInWithEmail,
     signOut
   };
 };

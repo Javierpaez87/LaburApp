@@ -3,11 +3,45 @@ import { auth, googleProvider } from './firebase';
 import {
   signInWithPopup,
   signOut as firebaseSignOut,
-  onAuthStateChanged as firebaseOnAuthStateChanged
+  onAuthStateChanged as firebaseOnAuthStateChanged,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile
 } from 'firebase/auth';
 
 export const signInWithGoogle = async (): Promise<User> => {
   const result = await signInWithPopup(auth, googleProvider);
+  const firebaseUser = result.user;
+
+  return {
+    id: firebaseUser.uid,
+    email: firebaseUser.email || '',
+    name: firebaseUser.displayName || '',
+    photoUrl: firebaseUser.photoURL || '',
+    createdAt: new Date()
+  };
+};
+
+export const signUpWithEmail = async (email: string, password: string, name: string): Promise<User> => {
+  const result = await createUserWithEmailAndPassword(auth, email, password);
+  const firebaseUser = result.user;
+
+  // Update the user's display name
+  await updateProfile(firebaseUser, {
+    displayName: name
+  });
+
+  return {
+    id: firebaseUser.uid,
+    email: firebaseUser.email || '',
+    name: name,
+    photoUrl: firebaseUser.photoURL || '',
+    createdAt: new Date()
+  };
+};
+
+export const signInWithEmail = async (email: string, password: string): Promise<User> => {
+  const result = await signInWithEmailAndPassword(auth, email, password);
   const firebaseUser = result.user;
 
   return {
