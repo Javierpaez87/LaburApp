@@ -100,9 +100,9 @@ export const HomePage: React.FC<HomePageProps> = ({
               className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer"
             >
               <img src="/LaburArApp logo.png" alt="LaburAr App" className="h-8 w-auto" />
-              <h1 className="font-bold tracking-tight leading-tight">
-  <span className="text-xl md:text-2xl">LaburAr</span>
-  <span className="block text-xs md:text-sm font-medium text-muted-foreground -mt-0.0">app</span>
+             <h1 className="font-bold tracking-tight leading-none">
+  <span className="text-xl md:text-2xl leading-none">LaburAr</span>
+  <span className="block text-xs md:text-sm font-semibold text-black -mt-1 leading-none">app</span>
 </h1>
             </button>
 
