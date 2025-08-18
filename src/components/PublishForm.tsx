@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { CitySelect } from '@/components/CitySelect';
 import { SERVICE_CATEGORIES, ServiceFormData } from '@/types/service';
 import { toast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
@@ -169,10 +170,10 @@ export const PublishForm: React.FC<PublishFormProps> = ({
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="city">Ciudad *</Label>
-                  <Input
-                    id="city"
-                    {...register('city')}
-                    placeholder="Buenos Aires"
+                  <CitySelect
+                    value={watch('city') || ''}
+                    onChange={(value) => setValue('city', value)}
+                    placeholder="Selecciona tu ciudad"
                     className="mt-1"
                   />
                   {errors.city && (
