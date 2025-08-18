@@ -32,9 +32,9 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
   };
 
   return (
-    <div className={`bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 ${className}`}>
+    <div className={`bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow duration-200 ${className}`}>
       {/* Profile Image */}
-      <div className="flex justify-center mb-4">
+      <div className="flex justify-center mb-3">
         <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-100">
           <div className="w-full h-full bg-cyan-600 flex items-center justify-center">
             <span className="text-white font-semibold text-lg">
@@ -47,7 +47,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
       {/* Header */}
       <div className="text-center mb-3">
         <div className="flex items-center justify-center gap-2 mb-1">
-          <h3 className="font-semibold text-lg text-gray-900">
+          <h3 className="font-semibold text-base text-gray-900">
             {service.name}
           </h3>
           {isNew() && (
@@ -68,7 +68,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
       </div>
 
       {/* Categories */}
-      <div className="flex flex-wrap justify-center gap-1 mb-4">
+      <div className="flex flex-wrap justify-center gap-1 mb-3">
         {service.categories.map((category) => (
           <Badge key={category} variant="secondary" className="text-xs">
             {category}
@@ -85,7 +85,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
       <div className="space-y-2">
         <Button
           onClick={handleWhatsApp}
-          className="w-full bg-green-600 hover:bg-green-700 text-white h-12 font-semibold"
+          className="w-full bg-green-600 hover:bg-green-700 text-white h-12 font-semibold text-sm"
         >
           <MessageCircle className="h-5 w-5 mr-2" />
           Contactar por WhatsApp
@@ -94,7 +94,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
           <Button
             onClick={handleCall}
             variant="outline"
-            className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50 h-10"
+            className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50 h-10 text-sm"
           >
             <Phone className="h-4 w-4 mr-2" />
             Llamar
@@ -102,7 +102,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
           <Button
             onClick={() => onViewMore(service.id)}
             variant="outline"
-            className="flex-1 border-cyan-300 text-cyan-700 hover:bg-cyan-50 h-10"
+            className="flex-1 border-cyan-300 text-cyan-700 hover:bg-cyan-50 h-10 text-sm"
           >
             Ver más
           </Button>
