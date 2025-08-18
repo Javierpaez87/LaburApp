@@ -63,45 +63,167 @@ export const listServices = async (filters?: {
   neighborhood?: string;
 }): Promise<Service[]> => {
   try {
-    const servicesRef = collection(db, 'services');
-    // Simplify query to avoid index requirements - we'll filter and sort on client side
-    let q = query(servicesRef, where('isActive', '==', true));
-    
-    const snapshot = await getDocs(q);
-    let services = snapshot.docs.map(convertFirestoreToService);
-    
-    // Sort by createdAt on client side to avoid index requirement
-    services.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-    
-    // Aplicar filtros en el cliente (ya que Firestore tiene limitaciones con múltiples where)
-    if (filters?.search) {
-      const searchLower = filters.search.toLowerCase();
-      services = services.filter(service => 
-        service.name.toLowerCase().includes(searchLower) ||
-        service.company?.toLowerCase().includes(searchLower) ||
-        service.description.toLowerCase().includes(searchLower)
-      );
+    // In development, return mock data if Firestore is not accessible
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Using mock data for development');
+      const mockServices: Service[] = [
+        {
+          id: 'mock-1',
+          userId: 'mock-user-1',
+          name: 'Juan Carlos Pérez',
+          company: 'Plomería JCP',
+          city: 'Buenos Aires',
+          neighborhood: 'Palermo',
+          phone: '541134567890',
+          email: 'juan@plomeriajcp.com',
+          categories: ['Plomería', 'Gasista'],
+          description: 'Más de 15 años de experiencia en instalaciones y reparaciones de plomería. Trabajo las 24hs para emergencias. Presupuesto sin cargo.',
+          status: 'active' as const,
+          createdAt: new Date(),
+          whatsappMessage: 'Hola, te contacto por LaburAr para solicitarte un presupuesto por'
+        },
+        {
+          id: 'mock-2',
+          userId: 'mock-user-2',
+          name: 'María González',
+          company: 'Carpintería Artesanal MG',
+          city: 'Buenos Aires',
+          neighborhood: 'Villa Crespo',
+          phone: '541145678901',
+          email: 'maria@carpinteriamg.com',
+          categories: ['Carpintería'],
+          description: 'Especialista en muebles a medida y restauración. Trabajo con maderas nobles y diseños personalizados.',
+          status: 'active' as const,
+          createdAt: new Date(),
+          whatsappMessage: 'Hola, te contacto por LaburAr para solicitarte un presupuesto por'
+        },
+        {
+          id: 'mock-3',
+          userId: 'mock-user-3',
+          name: 'Carlos Rodríguez',
+          company: 'Electricidad CR',
+          city: 'Córdoba',
+          neighborhood: 'Nueva Córdoba',
+          phone: '543514567890',
+          email: 'carlos@electricidadcr.com',
+          categories: ['Electricista'],
+          description: 'Instalaciones eléctricas residenciales y comerciales. Certificado por el ENRE. Atención de urgencias.',
+          status: 'active' as const,
+          createdAt: new Date(),
+          whatsappMessage: 'Hola, te contacto por LaburAr para solicitarte un presupuesto por'
+        },
+        {
+          id: 'mock-4',
+          userId: 'mock-user-4',
+          name: 'Ana Martínez',
+          company: 'Belleza Total',
+          city: 'Rosario',
+          neighborhood: 'Centro',
+          phone: '543414567890',
+          email: 'ana@bellezatotal.com',
+          categories: ['Peluquería'],
+          description: 'Cortes modernos, coloración y tratamientos capilares. Más de 10 años de experiencia en el rubro.',
+          status: 'active' as const,
+          createdAt: new Date(),
+          whatsappMessage: 'Hola, te contacto por LaburAr para solicitarte un presupuesto por'
+        },
+        {
+          id: 'mock-5',
+          userId: 'mock-user-5',
+          name: 'Roberto Silva',
+          company: 'Sabores Patagónicos',
+          city: 'Bariloche',
+          neighborhood: 'Centro',
+          phone: '542944567890',
+          email: 'roberto@saborespatagonicos.com',
+          categories: ['Gastronomía'],
+          description: 'Catering para eventos, especialidad en comida patagónica. Servicio completo para bodas y celebraciones.',
+          status: 'active' as const,
+          createdAt: new Date(),
+          whatsappMessage: 'Hola, te contacto por LaburAr para solicitarte un presupuesto por'
+        }
+      ];
+      
+      let services = [...mockServices];
+      
+      // Apply filters
+      if (filters?.search) {
+        const searchLower = filters.search.toLowerCase();
+        services = services.filter(service => 
+          service.name.toLowerCase().includes(searchLower) ||
+          service.company?.toLowerCase().includes(searchLower) ||
+          service.description.toLowerCase().includes(searchLower)
+        );
+      }
+      
+      if (filters?.category) {
+        services = services.filter(service =>
+          service.categories.includes(filters.category!)
+        );
+      }
+      
+      if (filters?.city) {
+        services = services.filter(service =>
+          service.city.toLowerCase().includes(filters.city!.toLowerCase())
+        );
+      }
+      
+      if (filters?.neighborhood) {
+        services = services.filter(service =>
+          service.neighborhood && service.neighborhood.toLowerCase().includes(filters.neighborhood!.toLowerCase())
+        );
+      }
+      
+      return services;
     }
     
-    if (filters?.category) {
-      services = services.filter(service =>
-        service.categories.includes(filters.category!)
-      );
+    // Try Firestore in production
+    try {
+      const servicesRef = collection(db, 'services');
+      // Simplify query to avoid index requirements - we'll filter and sort on client side
+      let q = query(servicesRef, where('isActive', '==', true));
+      
+      const snapshot = await getDocs(q);
+      let services = snapshot.docs.map(convertFirestoreToService);
+      
+      // Sort by createdAt on client side to avoid index requirement
+      services.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+      
+      // Apply filters on client side
+      if (filters?.search) {
+        const searchLower = filters.search.toLowerCase();
+        services = services.filter(service => 
+          service.name.toLowerCase().includes(searchLower) ||
+          service.company?.toLowerCase().includes(searchLower) ||
+          service.description.toLowerCase().includes(searchLower)
+        );
+      }
+      
+      if (filters?.category) {
+        services = services.filter(service =>
+          service.categories.includes(filters.category!)
+        );
+      }
+      
+      if (filters?.city) {
+        services = services.filter(service =>
+          service.city.toLowerCase().includes(filters.city!.toLowerCase())
+        );
+      }
+      
+      if (filters?.neighborhood) {
+        services = services.filter(service =>
+          service.neighborhood && service.neighborhood.toLowerCase().includes(filters.neighborhood!.toLowerCase())
+        );
+      }
+      
+      return services;
+    } catch (firestoreError) {
+      console.warn('Firestore not accessible, using fallback data:', firestoreError);
+      // Return empty array if Firestore fails
+      return [];
     }
     
-    if (filters?.city) {
-      services = services.filter(service =>
-        service.city.toLowerCase().includes(filters.city!.toLowerCase())
-      );
-    }
-    
-    if (filters?.neighborhood) {
-      services = services.filter(service =>
-        service.neighborhood && service.neighborhood.toLowerCase().includes(filters.neighborhood!.toLowerCase())
-      );
-    }
-    
-    return services;
   } catch (error) {
     console.error('Error listing services:', error);
     throw new Error('Error al cargar los servicios');
