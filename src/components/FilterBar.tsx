@@ -14,15 +14,6 @@ interface FilterBarProps {
   className?: string;
 }
 
-const CITIES = [
-  'Buenos Aires',
-  'Córdoba',
-  'Rosario',
-  'Mendoza',
-  'La Plata',
-  'Mar del Plata'
-];
-
 export const FilterBar: React.FC<FilterBarProps> = ({
   selectedCategory,
   selectedCity,
