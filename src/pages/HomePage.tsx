@@ -102,7 +102,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               <img src="/LaburArApp logo.png" alt="LaburAr App" className="h-8 w-auto" />
               <h1 className="font-bold tracking-tight leading-tight">
   <span className="text-xl md:text-2xl">LaburAr</span>
-  <span className="block text-xs md:text-sm font-medium text-muted-foreground -mt-0.5">app</span>
+  <span className="block text-xs md:text-sm font-medium text-muted-foreground -mt-0.0">app</span>
 </h1>
             </button>
 
