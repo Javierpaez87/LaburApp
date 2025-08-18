@@ -128,30 +128,20 @@ export const createService = async (serviceData: ServiceFormData, userId: string
   try {
     const { customCategory, ...serviceDataWithoutCustomCategory } = serviceData;
     
+    // Only send fields that are allowed by security rules
     const newServiceData = {
-      // Required fields for Firestore rules
       title: serviceDataWithoutCustomCategory.name,
       description: serviceDataWithoutCustomCategory.description,
-      category: serviceDataWithoutCustomCategory.categories[0] || 'Otros', // Use first category as main category
+      category: serviceDataWithoutCustomCategory.categories[0] || 'Otros',
       isActive: true,
       authorUid: userId,
       createdAt: Timestamp.now(),
-      updatedAt: Timestamp.now(),
-      
-      // Additional fields for our app
-      name: serviceDataWithoutCustomCategory.name,
-      company: serviceDataWithoutCustomCategory.company,
-      city: serviceDataWithoutCustomCategory.city,
-      neighborhood: serviceDataWithoutCustomCategory.neighborhood,
-      phone: serviceDataWithoutCustomCategory.phone,
-      email: serviceDataWithoutCustomCategory.email || '',
-      categories: serviceDataWithoutCustomCategory.categories,
-      whatsappMessage: serviceDataWithoutCustomCategory.whatsappMessage || 'Hola, te contacto por LaburAr para solicitarte un presupuesto por'
+      updatedAt: Timestamp.now()
     };
     
     const docRef = await addDoc(collection(db, 'services'), newServiceData);
     
-    // Retornar el servicio creado
+    // Return the service with all fields needed by the app
     return {
       id: docRef.id,
       userId: userId,
