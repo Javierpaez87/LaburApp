@@ -1,15 +1,19 @@
 import { useState, useEffect } from 'react';
 import { User } from '@/types/user';
-import { getCurrentUser, onAuthStateChanged, signInWithGoogle as authSignInWithGoogle, signOut as authSignOut } from '@/services/auth';
+import {
+  onAuthStateChanged,
+  signInWithGoogle as authSignInWithGoogle,
+  signOut as authSignOut
+} from '@/services/auth';
 
 export const useAuth = () => {
-  const [user, setUser] = useState<User | null>(getCurrentUser());
-  const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState<User | null>(null); // 👈 inicia en null
+  const [isLoading, setIsLoading] = useState(true);    // 👈 inicia cargando
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged((user) => {
       setUser(user);
-      setIsLoading(false);
+      setIsLoading(false); // 👈 se resuelve después de saber si hay user
     });
 
     return unsubscribe;
