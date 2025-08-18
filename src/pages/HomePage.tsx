@@ -33,8 +33,8 @@ export const HomePage: React.FC<HomePageProps> = ({
   const loadServices = async () => {
     setIsLoading(true);
     try {
-      // Inicializar datos de prueba si es necesario (solo en desarrollo)
-      if (process.env.NODE_ENV === 'development') {
+      // Only initialize mock data if user is authenticated and in development
+      if (process.env.NODE_ENV === 'development' && isAuthenticated) {
         await initializeMockData();
       }
       
@@ -54,7 +54,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
   useEffect(() => {
     loadServices();
-  }, [searchQuery, selectedCategory, selectedCity]);
+  }, [searchQuery, selectedCategory, selectedCity, isAuthenticated]);
 
   const handleSearch = (query: string, location?: string) => {
     setSearchQuery(query);

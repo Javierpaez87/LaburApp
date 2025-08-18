@@ -66,14 +66,14 @@ export const listServices = async (filters?: {
 }): Promise<Service[]> => {
   try {
     const servicesRef = collection(db, 'services');
-    let q = query(
-      servicesRef, 
-      where('status', '==', 'active'),
-      orderBy('createdAt', 'desc')
-    );
+    // Simplify query to avoid index requirements - we'll filter and sort on client side
+    let q = query(servicesRef, where('status', '==', 'active'));
     
     const snapshot = await getDocs(q);
     let services = snapshot.docs.map(convertFirestoreToService);
+    
+    // Sort by createdAt on client side to avoid index requirement
+    services.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
     
     // Aplicar filtros en el cliente (ya que Firestore tiene limitaciones con múltiples where)
     if (filters?.search) {
@@ -218,10 +218,16 @@ export const deleteService = async (serviceId: string, userId: string): Promise<
 
 // Función para inicializar datos de prueba (opcional, solo para desarrollo)
 export const initializeMockData = async (): Promise<void> => {
+  // Skip initialization in production or if user is not authenticated
+  if (process.env.NODE_ENV === 'production') {
+    return;
+  }
+  
   try {
     // Verificar si ya hay datos
     const servicesRef = collection(db, 'services');
-    const snapshot = await getDocs(servicesRef);
+    const q = query(servicesRef, where('status', '==', 'active'));
+    const snapshot = await getDocs(q);
     
     if (snapshot.empty) {
       console.log('Inicializando datos de prueba...');
@@ -264,6 +270,7 @@ export const initializeMockData = async (): Promise<void> => {
       console.log('Datos de prueba inicializados');
     }
   } catch (error) {
-    console.error('Error initializing mock data:', error);
+    console.warn('Could not initialize mock data (this is normal if not authenticated):', error);
+    // Don't throw error, just log warning
   }
 };
