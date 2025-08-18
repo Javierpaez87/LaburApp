@@ -143,12 +143,12 @@ export const HomePage: React.FC<HomePageProps> = ({
           <Button
             onClick={handlePublishClick}
             size="lg"
-            className="bg-white hover:bg-gray-50 text-cyan-600 hover:text-cyan-700 font-semibold rounded-xl px-6 md:px-8 py-6 text-sm md:text-base shadow-lg border-2 border-white hover:border-gray-100 transition-all duration-200 w-full max-w-lg mx-auto"
+            className="bg-laburar-600 hover:bg-laburar-700 text-white font-semibold rounded-xl px-6 md:px-8 py-6 text-sm md:text-base shadow-lg border-2 border-laburar-600 hover:border-laburar-700 transition-all duration-200 w-full max-w-lg mx-auto"
           >
             <UserPlus className="h-5 w-5 mr-2" />
             <div className="text-center leading-tight">
               <div className="font-bold">Registra tus servicios</div>
-              <div className="text-xs md:text-sm font-normal opacity-90">Es gratis y solo tarda 4 minutos</div>
+              <div className="text-xs md:text-sm font-normal text-white/90">Es gratis y solo tarda 4 minutos</div>
             </div>
           </Button>
         </div>
