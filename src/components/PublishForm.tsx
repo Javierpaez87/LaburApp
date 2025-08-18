@@ -298,8 +298,6 @@ export const PublishForm: React.FC<PublishFormProps> = ({
             </div>
 
             {/* Submit */}
-            import { Loader2 } from 'lucide-react'; // ya lo tenés en otros archivos
-
 <Button
   type="submit"
   disabled={isLoading}
