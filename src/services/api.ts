@@ -177,14 +177,16 @@ export const createService = async (serviceData: ServiceFormData, userId: string
 export const getUserServices = async (userId: string): Promise<Service[]> => {
   try {
     const servicesRef = collection(db, 'services');
-    const q = query(
-      servicesRef, 
-      where('authorUid', '==', userId),
-      orderBy('createdAt', 'desc')
-    );
+    // Simplify query to avoid index requirements - we'll sort on client side
+    const q = query(servicesRef, where('authorUid', '==', userId));
     
     const snapshot = await getDocs(q);
-    return snapshot.docs.map(convertFirestoreToService);
+    let services = snapshot.docs.map(convertFirestoreToService);
+    
+    // Sort by createdAt on client side to avoid index requirement
+    services.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+    
+    return services;
   } catch (error) {
     console.error('Error getting user services:', error);
     throw new Error('Error al cargar tus servicios');
