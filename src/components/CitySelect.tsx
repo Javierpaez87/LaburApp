@@ -23,6 +23,7 @@ export const CitySelect: React.FC<CitySelectProps> = ({
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 });
 
   useEffect(() => {
     setSearchQuery(value);
@@ -53,15 +54,28 @@ export const CitySelect: React.FC<CitySelectProps> = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const updateDropdownPosition = () => {
+    if (inputRef.current) {
+      const rect = inputRef.current.getBoundingClientRect();
+      setDropdownPosition({
+        top: rect.bottom + window.scrollY + 4,
+        left: rect.left + window.scrollX,
+        width: rect.width
+      });
+    }
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     setSearchQuery(newValue);
     setIsOpen(true);
     setHighlightedIndex(-1);
+    updateDropdownPosition();
   };
 
   const handleInputFocus = () => {
     setIsOpen(true);
+    updateDropdownPosition();
     if (searchQuery.length >= 2) {
       const results = searchCities(searchQuery, 8);
       setSuggestions(results);
@@ -137,7 +151,12 @@ export const CitySelect: React.FC<CitySelectProps> = ({
       {isOpen && suggestions.length > 0 && (
         <div
           ref={dropdownRef}
-          className="absolute z-[9999] w-full mt-1 bg-white border border-gray-200 rounded-md shadow-xl max-h-60 overflow-y-auto"
+          className="fixed z-[99999] bg-white border border-gray-200 rounded-md shadow-xl max-h-60 overflow-y-auto"
+          style={{
+            top: `${dropdownPosition.top}px`,
+            left: `${dropdownPosition.left}px`,
+            width: `${dropdownPosition.width}px`
+          }}
         >
           {suggestions.map((city, index) => (
             <button
