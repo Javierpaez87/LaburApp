@@ -42,7 +42,7 @@ const convertFirestoreToService = (doc: any): Service => {
   const data = doc.data();
   return {
     id: doc.id,
-    userId: data.userId,
+    userId: data.authorUid,
     name: data.name,
     company: data.company,
     city: data.city,
@@ -51,7 +51,7 @@ const convertFirestoreToService = (doc: any): Service => {
     email: data.email || '',
     categories: data.categories,
     description: data.description,
-    status: data.status,
+    status: data.isActive ? 'active' : 'inactive',
     createdAt: convertTimestampToDate(data.createdAt),
     whatsappMessage: data.whatsappMessage || 'Hola, te contacto por LaburAr para solicitarte un presupuesto por'
   };
@@ -66,7 +66,7 @@ export const listServices = async (filters?: {
   try {
     const servicesRef = collection(db, 'services');
     // Simplify query to avoid index requirements - we'll filter and sort on client side
-    let q = query(servicesRef, where('status', '==', 'active'));
+    let q = query(servicesRef, where('isActive', '==', true));
     
     const snapshot = await getDocs(q);
     let services = snapshot.docs.map(convertFirestoreToService);
@@ -114,7 +114,7 @@ export const getServiceById = async (id: string): Promise<Service | null> => {
     const docRef = doc(db, 'services', id);
     const docSnap = await getDoc(docRef);
     
-    if (docSnap.exists() && docSnap.data().status === 'active') {
+    if (docSnap.exists() && docSnap.data().isActive === true) {
       return convertFirestoreToService(docSnap);
     }
     
@@ -130,11 +130,23 @@ export const createService = async (serviceData: ServiceFormData, userId: string
     const { customCategory, ...serviceDataWithoutCustomCategory } = serviceData;
     
     const newServiceData = {
-      userId,
-      ...serviceDataWithoutCustomCategory,
-      email: serviceDataWithoutCustomCategory.email || '',
-      status: 'active',
+      // Required fields for Firestore rules
+      title: serviceDataWithoutCustomCategory.name,
+      description: serviceDataWithoutCustomCategory.description,
+      category: serviceDataWithoutCustomCategory.categories[0] || 'Otros', // Use first category as main category
+      isActive: true,
+      authorUid: userId,
       createdAt: Timestamp.now(),
+      updatedAt: Timestamp.now(),
+      
+      // Additional fields for our app
+      name: serviceDataWithoutCustomCategory.name,
+      company: serviceDataWithoutCustomCategory.company,
+      city: serviceDataWithoutCustomCategory.city,
+      neighborhood: serviceDataWithoutCustomCategory.neighborhood,
+      phone: serviceDataWithoutCustomCategory.phone,
+      email: serviceDataWithoutCustomCategory.email || '',
+      categories: serviceDataWithoutCustomCategory.categories,
       whatsappMessage: serviceDataWithoutCustomCategory.whatsappMessage || 'Hola, te contacto por LaburAr para solicitarte un presupuesto por'
     };
     
@@ -143,9 +155,18 @@ export const createService = async (serviceData: ServiceFormData, userId: string
     // Retornar el servicio creado
     return {
       id: docRef.id,
-      ...newServiceData,
+      userId: userId,
+      name: serviceDataWithoutCustomCategory.name,
+      company: serviceDataWithoutCustomCategory.company,
+      city: serviceDataWithoutCustomCategory.city,
+      neighborhood: serviceDataWithoutCustomCategory.neighborhood,
+      phone: serviceDataWithoutCustomCategory.phone,
+      email: serviceDataWithoutCustomCategory.email || '',
+      categories: serviceDataWithoutCustomCategory.categories,
+      description: serviceDataWithoutCustomCategory.description,
+      status: 'active' as const,
       createdAt: new Date(),
-      status: 'active' as const
+      whatsappMessage: serviceDataWithoutCustomCategory.whatsappMessage || 'Hola, te contacto por LaburAr para solicitarte un presupuesto por'
     };
   } catch (error) {
     console.error('Error creating service:', error);
@@ -158,7 +179,7 @@ export const getUserServices = async (userId: string): Promise<Service[]> => {
     const servicesRef = collection(db, 'services');
     const q = query(
       servicesRef, 
-      where('userId', '==', userId),
+      where('authorUid', '==', userId),
       orderBy('createdAt', 'desc')
     );
     
@@ -176,15 +197,47 @@ export const updateService = async (serviceId: string, serviceData: Partial<Serv
     
     // Verificar que el servicio pertenece al usuario
     const docSnap = await getDoc(docRef);
-    if (!docSnap.exists() || docSnap.data().userId !== userId) {
+    if (!docSnap.exists() || docSnap.data().authorUid !== userId) {
       throw new Error('Servicio no encontrado o no autorizado');
     }
     
-    // Actualizar el documento
-    await updateDoc(docRef, {
-      ...serviceData,
+    // Prepare update data to match Firestore rules
+    const updateData: any = {
       updatedAt: Timestamp.now()
-    });
+    };
+    
+    if (serviceData.name) {
+      updateData.title = serviceData.name;
+      updateData.name = serviceData.name;
+    }
+    if (serviceData.description) {
+      updateData.description = serviceData.description;
+    }
+    if (serviceData.categories && serviceData.categories.length > 0) {
+      updateData.category = serviceData.categories[0];
+      updateData.categories = serviceData.categories;
+    }
+    if (serviceData.company !== undefined) {
+      updateData.company = serviceData.company;
+    }
+    if (serviceData.city) {
+      updateData.city = serviceData.city;
+    }
+    if (serviceData.neighborhood !== undefined) {
+      updateData.neighborhood = serviceData.neighborhood;
+    }
+    if (serviceData.phone) {
+      updateData.phone = serviceData.phone;
+    }
+    if (serviceData.email !== undefined) {
+      updateData.email = serviceData.email;
+    }
+    if (serviceData.whatsappMessage !== undefined) {
+      updateData.whatsappMessage = serviceData.whatsappMessage;
+    }
+    
+    // Actualizar el documento
+    await updateDoc(docRef, updateData);
     
     // Obtener y retornar el servicio actualizado
     const updatedDoc = await getDoc(docRef);
@@ -201,14 +254,14 @@ export const deleteService = async (serviceId: string, userId: string): Promise<
     
     // Verificar que el servicio pertenece al usuario
     const docSnap = await getDoc(docRef);
-    if (!docSnap.exists() || docSnap.data().userId !== userId) {
+    if (!docSnap.exists() || docSnap.data().authorUid !== userId) {
       throw new Error('Servicio no encontrado o no autorizado');
     }
     
     // Marcar como inactivo en lugar de eliminar completamente
     await updateDoc(docRef, {
-      status: 'inactive',
-      deletedAt: Timestamp.now()
+      isActive: false,
+      updatedAt: Timestamp.now()
     });
   } catch (error) {
     console.error('Error deleting service:', error);
@@ -234,7 +287,16 @@ export const initializeMockData = async (): Promise<void> => {
       
       const mockServices = [
         {
-          userId: 'mock-user-1',
+          // Required fields for Firestore rules
+          title: 'Juan Carlos Pérez',
+          description: 'Más de 15 años de experiencia en instalaciones y reparaciones de plomería. Trabajo las 24hs para emergencias. Presupuesto sin cargo.',
+          category: 'Plomería',
+          isActive: true,
+          authorUid: 'mock-user-1',
+          createdAt: Timestamp.now(),
+          updatedAt: Timestamp.now(),
+          
+          // Additional fields for our app
           name: 'Juan Carlos Pérez',
           company: 'Plomería JCP',
           city: 'Buenos Aires',
@@ -242,13 +304,19 @@ export const initializeMockData = async (): Promise<void> => {
           phone: '541134567890',
           email: 'juan@plomeriajcp.com',
           categories: ['Plomería', 'Gasista'],
-          description: 'Más de 15 años de experiencia en instalaciones y reparaciones de plomería. Trabajo las 24hs para emergencias. Presupuesto sin cargo.',
-          status: 'active',
-          createdAt: Timestamp.now(),
           whatsappMessage: 'Hola, te contacto por LaburAr para solicitarte un presupuesto por'
         },
         {
-          userId: 'mock-user-2',
+          // Required fields for Firestore rules
+          title: 'María González',
+          description: 'Especialista en muebles a medida y restauración. Trabajo con maderas nobles y diseños personalizados.',
+          category: 'Carpintería',
+          isActive: true,
+          authorUid: 'mock-user-2',
+          createdAt: Timestamp.now(),
+          updatedAt: Timestamp.now(),
+          
+          // Additional fields for our app
           name: 'María González',
           company: 'Carpintería Artesanal MG',
           city: 'Buenos Aires',
@@ -256,9 +324,6 @@ export const initializeMockData = async (): Promise<void> => {
           phone: '541145678901',
           email: 'maria@carpinteriamg.com',
           categories: ['Carpintería'],
-          description: 'Especialista en muebles a medida y restauración. Trabajo con maderas nobles y diseños personalizados.',
-          status: 'active',
-          createdAt: Timestamp.now(),
           whatsappMessage: 'Hola, te contacto por LaburAr para solicitarte un presupuesto por'
         }
       ];
