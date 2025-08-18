@@ -54,6 +54,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
   useEffect(() => {
     loadServices();
+  }, [searchQuery, selectedCategory, selectedCity]);
 
   const handleSearch = (query: string, location?: string) => {
     setSearchQuery(query);
