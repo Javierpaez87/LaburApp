@@ -16,7 +16,7 @@ export const PublishPage: React.FC<PublishPageProps> = ({
   onServiceCreated,
   editingService 
 }) => {
-  const { user, isLoading: authLoading } = useAuth();
+  const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (data: ServiceFormData) => {
@@ -53,27 +53,6 @@ export const PublishPage: React.FC<PublishPageProps> = ({
       whatsappMessage: editingService.whatsappMessage
     };
   };
-
-  if (authLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-600 text-lg">Cargando sesión...</p>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return (
-      <div className="min-h-screen flex items-center justify-center text-center px-4">
-        <div>
-          <h2 className="text-xl font-semibold mb-2">Necesitás iniciar sesión</h2>
-          <p className="text-gray-600">
-            Para publicar o editar un servicio, primero tenés que iniciar sesión.
-          </p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
