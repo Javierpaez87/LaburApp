@@ -188,10 +188,8 @@ export const HomePage: React.FC<HomePageProps> = ({
         <div className="max-w-7xl mx-auto px-4 py-12 text-center">
           <div className="flex items-center justify-center gap-2 mb-3">
             <img src="/Logo pNG.png" alt="LaburAr" className="h-8 w-auto" />
-            <h2 className="text-xl font-bold leading-none">
-  LaburAr
-  <span className="block text-xs font-semibold leading-none -mt-1">app</span>
-</h2>
+            <h2 className="text-xl font-bold">LaburAr app</h2>
+          </div>
           <p className="text-white/70 mb-6">
             Conectando personas con los mejores profesionales de servicios
           </p>
