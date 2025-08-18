@@ -297,16 +297,23 @@ export const PublishForm: React.FC<PublishFormProps> = ({
             </div>
 
             {/* Submit */}
-            <Button
-              type="submit"
-              disabled={isLoading}
-              className="w-full h-12 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold"
-            >
-              {isLoading 
-                ? (isEditing ? 'Guardando...' : 'Publicando...') 
-                : (isEditing ? 'Guardar cambios' : 'Publicar servicio (gratis)')
-              }
-            </Button>
+            import { Loader2 } from 'lucide-react'; // ya lo tenés en otros archivos
+
+<Button
+  type="submit"
+  disabled={isLoading}
+  className="w-full h-12 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold flex items-center justify-center"
+>
+  {isLoading ? (
+    <>
+      <Loader2 className="h-5 w-5 animate-spin mr-2" />
+      {isEditing ? 'Guardando...' : 'Publicando...'}
+    </>
+  ) : (
+    isEditing ? 'Guardar cambios' : 'Publicar servicio (gratis)'
+  )}
+</Button>
+
           </form>
         </CardContent>
       </Card>
