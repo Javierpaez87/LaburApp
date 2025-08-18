@@ -39,15 +39,23 @@ export const getCurrentUser = (): User | null => {
 
 export const onAuthStateChanged = (callback: (user: User | null) => void) => {
   return firebaseOnAuthStateChanged(auth, (firebaseUser) => {
+    console.log('=== AUTH STATE CHANGED ===');
+    console.log('Firebase user:', firebaseUser);
+    console.log('User ID:', firebaseUser?.uid);
+    console.log('User email:', firebaseUser?.email);
+    
     if (firebaseUser) {
-      callback({
+      const user = {
         id: firebaseUser.uid,
         email: firebaseUser.email || '',
         name: firebaseUser.displayName || '',
         photoUrl: firebaseUser.photoURL || '',
         createdAt: new Date()
-      });
+      };
+      console.log('Converted user object:', user);
+      callback(user);
     } else {
+      console.log('No user authenticated');
       callback(null);
     }
   });

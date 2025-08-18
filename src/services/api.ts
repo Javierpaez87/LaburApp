@@ -126,7 +126,13 @@ export const getServiceById = async (id: string): Promise<Service | null> => {
 
 export const createService = async (serviceData: ServiceFormData, userId: string): Promise<Service> => {
   try {
+    console.log('=== DEBUG: Starting createService ===');
+    console.log('Raw serviceData:', serviceData);
+    console.log('userId:', userId);
+    
     const { customCategory, ...serviceDataWithoutCustomCategory } = serviceData;
+    
+    console.log('serviceDataWithoutCustomCategory:', serviceDataWithoutCustomCategory);
     
     // Prepare data for Firestore with required fields first
     const newServiceData = {
@@ -150,9 +156,15 @@ export const createService = async (serviceData: ServiceFormData, userId: string
       whatsappMessage: serviceDataWithoutCustomCategory.whatsappMessage || 'Hola, te contacto por LaburAr para solicitarte un presupuesto por'
     };
     
-    console.log('Creating service with data:', newServiceData);
+    console.log('=== Final data to send to Firestore ===');
+    console.log('newServiceData:', JSON.stringify(newServiceData, null, 2));
+    console.log('Data keys:', Object.keys(newServiceData));
+    console.log('authorUid matches userId?', newServiceData.authorUid === userId);
     
+    console.log('=== Attempting to create document ===');
     const docRef = await addDoc(collection(db, 'services'), newServiceData);
+    console.log('=== Document created successfully ===');
+    console.log('Document ID:', docRef.id);
     
     // Return the complete service
     return {
