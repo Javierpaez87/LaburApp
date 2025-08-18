@@ -133,7 +133,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             Encontrá el servicio que necesitás
           </h2>
           <p className="text-lg md:text-xl text-white/90 mb-8">
-            Conectamos personas con los mejores profesionales cerca tuyo
+            Te conectamos con los mejores profesionales cerca tuyo
           </p>
 
           <div className="mx-auto max-w-3xl">
