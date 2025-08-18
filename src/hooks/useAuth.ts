@@ -48,6 +48,34 @@ export const useAuth = () => {
     }
   };
 
+  const signUpWithEmail = async (email: string, password: string, name: string) => {
+    setIsLoading(true);
+    try {
+      const user = await authSignUpWithEmail(email, password, name);
+      setUser(user);
+      return user;
+    } catch (error) {
+      console.error('Error signing up:', error);
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const signInWithEmail = async (email: string, password: string) => {
+    setIsLoading(true);
+    try {
+      const user = await authSignInWithEmail(email, password);
+      setUser(user);
+      return user;
+    } catch (error) {
+      console.error('Error signing in:', error);
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return {
     user,
     isLoading,
