@@ -194,14 +194,24 @@ export const HomePage: React.FC<HomePageProps> = ({
           <p className="text-white/70 mb-6">
             Conectando personas con los mejores profesionales de servicios
           </p>
-          <Button
-            onClick={handlePublishClick}
-            variant="outline"
-            className="border-white/30 text-white hover:bg-white hover:text-slate-900 rounded-xl"
-          >
-            <UserPlus className="h-4 w-4 mr-2" />
-            Registrar mi servicio
-          </Button>
+          
+          {/* Patagonia Argentina with mountain icon */}
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <svg 
+              className="h-5 w-5 text-white/70" 
+              fill="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path d="M14 6l-3.75 5 2.85 3.8-1.6 1.2C9.81 13.75 7 10 7 10l-6 8h22l-9-12z"/>
+            </svg>
+            <span className="text-white/70 font-medium">Patagonia Argentina</span>
+          </div>
+          
+          {/* Copyright */}
+          <p className="text-white/60 text-sm leading-relaxed">
+            © 2025 LaburAr App. Hecho con ❤️ en Junín de los Andes, Neuquén.<br />
+            Todos los derechos reservados.
+          </p>
         </div>
       </footer>
       
