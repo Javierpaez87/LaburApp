@@ -146,8 +146,8 @@ export const CitySelect: React.FC<CitySelectProps> = ({
               onClick={() => handleSuggestionClick(city)}
             >
               <div className="flex items-center">
-                <MapPin className="h-4 w-4 text-gray-400 mr-2" />
-                {city}
+                <MapPin className="h-4 w-4 text-gray-500 mr-2" />
+                <span className="text-gray-900">{city}</span>
               </div>
             </button>
           ))}
