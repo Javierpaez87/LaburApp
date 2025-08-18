@@ -102,11 +102,15 @@ export const CitySelect: React.FC<CitySelectProps> = ({
     }
   };
 
-  const handleInputBlur = () => {
-    // Delay to allow click on suggestions
-    setTimeout(() => {
-      onChange(searchQuery);
-    }, 150);
+  const handleInputBlur = (e: React.FocusEvent) => {
+    // Only update if we're not clicking on a suggestion
+    const relatedTarget = e.relatedTarget as HTMLElement;
+    if (!dropdownRef.current?.contains(relatedTarget)) {
+      // Delay to allow click on suggestions
+      setTimeout(() => {
+        setIsOpen(false);
+      }, 150);
+    }
   };
 
   return (
@@ -133,17 +137,20 @@ export const CitySelect: React.FC<CitySelectProps> = ({
       {isOpen && suggestions.length > 0 && (
         <div
           ref={dropdownRef}
-          className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-60 overflow-y-auto"
+          className="absolute z-[9999] w-full mt-1 bg-white border border-gray-200 rounded-md shadow-xl max-h-60 overflow-y-auto"
         >
           {suggestions.map((city, index) => (
             <button
               key={city}
               type="button"
+              onMouseDown={(e) => {
+                e.preventDefault(); // Prevent input blur
+                handleSuggestionClick(city);
+              }}
               className={cn(
                 "w-full px-4 py-2 text-left text-sm hover:bg-gray-50 focus:bg-gray-50 focus:outline-none",
                 index === highlightedIndex && "bg-gray-50"
               )}
-              onClick={() => handleSuggestionClick(city)}
             >
               <div className="flex items-center">
                 <MapPin className="h-4 w-4 text-gray-500 mr-2" />
