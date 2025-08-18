@@ -145,7 +145,8 @@ export const createService = async (serviceData: ServiceFormData, userId: string
     return {
       id: docRef.id,
       ...newServiceData,
-      createdAt: new Date()
+      createdAt: new Date(),
+      status: 'active' as const
     };
   } catch (error) {
     console.error('Error creating service:', error);
