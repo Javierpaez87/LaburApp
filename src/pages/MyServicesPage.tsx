@@ -86,7 +86,18 @@ export const MyServicesPage: React.FC<MyServicesPageProps> = ({
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center">
+            <div className="flex items-center gap-4">
+              <button 
+                onClick={onBack}
+                className="flex items-center hover:opacity-80 transition-opacity cursor-pointer"
+              >
+                <img 
+                  src="/LaburArApp logo.png" 
+                  alt="LaburAr" 
+                  className="h-8 w-auto mr-2"
+                />
+                <h1 className="text-xl font-bold text-cyan-500">LaburAr</h1>
+              </button>
               <Button
                 onClick={onBack}
                 variant="ghost"
@@ -95,7 +106,7 @@ export const MyServicesPage: React.FC<MyServicesPageProps> = ({
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Volver
               </Button>
-              <h1 className="text-2xl font-bold text-gray-900">Mis servicios</h1>
+              <h2 className="text-2xl font-bold text-gray-900">Mis servicios</h2>
             </div>
             <Button
               onClick={onCreateService}

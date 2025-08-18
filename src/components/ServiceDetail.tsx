@@ -35,6 +35,23 @@ export const ServiceDetail: React.FC<ServiceDetailProps> = ({ service, onBack })
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
+      {/* Header with Logo */}
+      <header className="bg-white shadow-sm border-b mb-6 -mx-4 px-4 py-4">
+        <div className="flex items-center justify-between">
+          <button 
+            onClick={onBack}
+            className="flex items-center hover:opacity-80 transition-opacity cursor-pointer"
+          >
+            <img 
+              src="/LaburArApp logo.png" 
+              alt="LaburAr" 
+              className="h-8 w-auto mr-2"
+            />
+            <h1 className="text-xl font-bold text-cyan-500">LaburAr</h1>
+          </button>
+        </div>
+      </header>
+
       {/* Back Button */}
       <Button
         onClick={onBack}

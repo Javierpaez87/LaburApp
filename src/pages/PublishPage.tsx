@@ -60,14 +60,17 @@ export const PublishPage: React.FC<PublishPageProps> = ({
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center">
+            <button 
+              onClick={onBack}
+              className="flex items-center hover:opacity-80 transition-opacity cursor-pointer"
+            >
               <img 
                 src="/LaburArApp logo.png" 
                 alt="LaburAr" 
                 className="h-8 w-auto mr-2"
               />
               <h1 className="text-2xl font-bold text-cyan-500">LaburAr</h1>
-            </div>
+            </button>
           </div>
         </div>
       </header>

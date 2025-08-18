@@ -95,10 +95,13 @@ export const HomePage: React.FC<HomePageProps> = ({
       <header className="sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
+            <button 
+              onClick={() => window.location.reload()}
+              className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer"
+            >
               <img src="/LaburArApp logo.png" alt="LaburAr App" className="h-8 w-auto" />
               <h1 className="text-xl md:text-2xl font-bold tracking-tight">LaburAr</h1>
-            </div>
+            </button>
 
             <div className="flex items-center gap-3">
               {isAuthenticated ? (
