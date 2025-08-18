@@ -192,7 +192,6 @@ export const HomePage: React.FC<HomePageProps> = ({
   LaburAr
   <span className="block text-xs font-semibold leading-none -mt-1">app</span>
 </h2>
-
           <p className="text-white/70 mb-6">
             Conectando personas con los mejores profesionales de servicios
           </p>
