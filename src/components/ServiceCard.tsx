@@ -32,85 +32,80 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
   };
 
   return (
-    <div className={`bg-white rounded-lg shadow-sm border border-gray-200 p-3 md:p-6 hover:shadow-md transition-shadow duration-200 ${className}`}>
-      <div className="flex flex-col sm:flex-row gap-2 md:gap-4">
-        {/* Profile Image */}
-        <div className="flex-shrink-0">
-          <div className="w-10 h-10 md:w-16 md:h-16 rounded-full overflow-hidden bg-gray-100 mx-auto sm:mx-0">
-            <div className="w-full h-full bg-cyan-600 flex items-center justify-center">
-              <span className="text-white font-semibold text-sm md:text-lg">
-                {service.name.charAt(0).toUpperCase()}
-              </span>
-            </div>
+    <div className={`bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 ${className}`}>
+      {/* Profile Image */}
+      <div className="flex justify-center mb-4">
+        <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-100">
+          <div className="w-full h-full bg-cyan-600 flex items-center justify-center">
+            <span className="text-white font-semibold text-lg">
+              {service.name.charAt(0).toUpperCase()}
+            </span>
           </div>
         </div>
+      </div>
 
-        {/* Content */}
-        <div className="flex-1 min-w-0">
-          <div className="flex items-start justify-between mb-1 md:mb-2">
-            <div>
-              <h3 className="font-semibold text-sm md:text-lg text-gray-900 truncate">
-                {service.name}
-              </h3>
-              {service.company && (
-                <p className="text-xs md:text-sm text-gray-600 truncate">{service.company}</p>
-              )}
-            </div>
-            {isNew() && (
-              <Badge variant="default" className="bg-green-100 text-green-800 ml-2 text-xs">
-                Nuevo
-              </Badge>
-            )}
-          </div>
+      {/* Header */}
+      <div className="text-center mb-3">
+        <div className="flex items-center justify-center gap-2 mb-1">
+          <h3 className="font-semibold text-lg text-gray-900">
+            {service.name}
+          </h3>
+          {isNew() && (
+            <Badge variant="default" className="bg-green-100 text-green-800 text-xs">
+              Nuevo
+            </Badge>
+          )}
+        </div>
+        {service.company && (
+          <p className="text-sm text-gray-600">{service.company}</p>
+        )}
+      </div>
 
-          {/* Location */}
-          <div className="flex items-center text-xs md:text-sm text-gray-500 mb-2 md:mb-3">
-            <MapPin className="h-3 w-3 md:h-4 md:w-4 mr-1" />
-            <span>{service.neighborhood ? `${service.neighborhood}, ` : ''}{service.city}</span>
-          </div>
+      {/* Location */}
+      <div className="flex items-center justify-center text-sm text-gray-500 mb-3">
+        <MapPin className="h-4 w-4 mr-1" />
+        <span>{service.neighborhood ? `${service.neighborhood}, ` : ''}{service.city}</span>
+      </div>
 
-          {/* Categories */}
-          <div className="flex flex-wrap gap-1 mb-2 md:mb-4">
-            {service.categories.map((category) => (
-              <Badge key={category} variant="secondary" className="text-xs px-1 py-0">
-                {category}
-              </Badge>
-            ))}
-          </div>
+      {/* Categories */}
+      <div className="flex flex-wrap justify-center gap-1 mb-4">
+        {service.categories.map((category) => (
+          <Badge key={category} variant="secondary" className="text-xs">
+            {category}
+          </Badge>
+        ))}
+      </div>
 
-          {/* Description */}
-          <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-4 line-clamp-2">
-            {service.description}
-          </p>
+      {/* Description */}
+      <p className="text-sm text-gray-600 mb-4 line-clamp-2 text-center">
+        {service.description}
+      </p>
 
-          {/* Actions */}
-          <div className="flex flex-col sm:flex-row gap-1 md:gap-2">
-            <Button
-              onClick={handleWhatsApp}
-              className="flex-1 bg-green-600 hover:bg-green-700 text-white h-10 md:h-9"
-              size="sm"
-            >
-              <MessageCircle className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" />
-              <span className="text-xs md:text-sm">WhatsApp</span>
-            </Button>
-            <Button
-              onClick={handleCall}
-              variant="outline"
-              className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50 h-10 md:h-9"
-              size="sm"
-            >
-              <Phone className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" />
-              <span className="text-xs md:text-sm">Llamar</span>
-            </Button>
-            <Button
-              onClick={() => onViewMore(service.id)}
-              variant="outline"
-              className="flex-1 border-cyan-300 text-cyan-700 hover:bg-cyan-50 h-10 md:h-9"
-              size="sm"
-            >
-              <span className="text-xs md:text-sm">+ Ver más</span>
-            </Button>
-          </div>
+      {/* Actions */}
+      <div className="space-y-2">
+        <Button
+          onClick={handleWhatsApp}
+          className="w-full bg-green-600 hover:bg-green-700 text-white h-12 font-semibold"
+        >
+          <MessageCircle className="h-5 w-5 mr-2" />
+          Contactar por WhatsApp
+        </Button>
+        <div className="flex gap-2">
+          <Button
+            onClick={handleCall}
+            variant="outline"
+            className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50 h-10"
+          >
+            <Phone className="h-4 w-4 mr-2" />
+            Llamar
+          </Button>
+          <Button
+            onClick={() => onViewMore(service.id)}
+            variant="outline"
+            className="flex-1 border-cyan-300 text-cyan-700 hover:bg-cyan-50 h-10"
+          >
+            Ver más
+          </Button>
         </div>
       </div>
     </div>
