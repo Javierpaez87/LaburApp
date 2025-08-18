@@ -128,7 +128,7 @@ export const createService = async (serviceData: ServiceFormData, userId: string
   try {
     const { customCategory, ...serviceDataWithoutCustomCategory } = serviceData;
     
-    // Send complete service data that matches security rules
+    // Prepare data for Firestore with required fields first
     const newServiceData = {
       // Required fields for security rules
       title: serviceDataWithoutCustomCategory.name,
@@ -139,16 +139,18 @@ export const createService = async (serviceData: ServiceFormData, userId: string
       createdAt: Timestamp.now(),
       updatedAt: Timestamp.now(),
       
-      // Complete service data
+      // Additional service data
       name: serviceDataWithoutCustomCategory.name,
       city: serviceDataWithoutCustomCategory.city,
       phone: serviceDataWithoutCustomCategory.phone,
       categories: serviceDataWithoutCustomCategory.categories,
-      ...(serviceDataWithoutCustomCategory.company && { company: serviceDataWithoutCustomCategory.company }),
-      ...(serviceDataWithoutCustomCategory.neighborhood && { neighborhood: serviceDataWithoutCustomCategory.neighborhood }),
-      ...(serviceDataWithoutCustomCategory.email && { email: serviceDataWithoutCustomCategory.email }),
-      ...(serviceDataWithoutCustomCategory.whatsappMessage && { whatsappMessage: serviceDataWithoutCustomCategory.whatsappMessage })
+      company: serviceDataWithoutCustomCategory.company || '',
+      neighborhood: serviceDataWithoutCustomCategory.neighborhood || '',
+      email: serviceDataWithoutCustomCategory.email || '',
+      whatsappMessage: serviceDataWithoutCustomCategory.whatsappMessage || 'Hola, te contacto por LaburAr para solicitarte un presupuesto por'
     };
+    
+    console.log('Creating service with data:', newServiceData);
     
     const docRef = await addDoc(collection(db, 'services'), newServiceData);
     
