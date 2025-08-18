@@ -128,20 +128,31 @@ export const createService = async (serviceData: ServiceFormData, userId: string
   try {
     const { customCategory, ...serviceDataWithoutCustomCategory } = serviceData;
     
-    // Only send fields that are allowed by security rules
+    // Send complete service data that matches security rules
     const newServiceData = {
+      // Required fields for security rules
       title: serviceDataWithoutCustomCategory.name,
       description: serviceDataWithoutCustomCategory.description,
       category: serviceDataWithoutCustomCategory.categories[0] || 'Otros',
       isActive: true,
       authorUid: userId,
       createdAt: Timestamp.now(),
-      updatedAt: Timestamp.now()
+      updatedAt: Timestamp.now(),
+      
+      // Complete service data
+      name: serviceDataWithoutCustomCategory.name,
+      city: serviceDataWithoutCustomCategory.city,
+      phone: serviceDataWithoutCustomCategory.phone,
+      categories: serviceDataWithoutCustomCategory.categories,
+      ...(serviceDataWithoutCustomCategory.company && { company: serviceDataWithoutCustomCategory.company }),
+      ...(serviceDataWithoutCustomCategory.neighborhood && { neighborhood: serviceDataWithoutCustomCategory.neighborhood }),
+      ...(serviceDataWithoutCustomCategory.email && { email: serviceDataWithoutCustomCategory.email }),
+      ...(serviceDataWithoutCustomCategory.whatsappMessage && { whatsappMessage: serviceDataWithoutCustomCategory.whatsappMessage })
     };
     
     const docRef = await addDoc(collection(db, 'services'), newServiceData);
     
-    // Return the service with all fields needed by the app
+    // Return the complete service
     return {
       id: docRef.id,
       userId: userId,
