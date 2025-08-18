@@ -56,7 +56,7 @@ export const PublishForm: React.FC<PublishFormProps> = ({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
       categories: [],
-      whatsappMessage: 'Hola, te contacto por LaburAr para solicitarte un presupuesto por',
+      whatsappMessage: 'Hola! Encontré tu perfil en LaburAr App y te escribo porque...',
       customCategory: ''
     }
   });
@@ -308,7 +308,7 @@ export const PublishForm: React.FC<PublishFormProps> = ({
               <Input
                 id="whatsappMessage"
                 {...register('whatsappMessage')}
-                placeholder="Hola, te contacto por LaburAr para solicitarte un presupuesto por"
+                placeholder="Hola! Encontré tu perfil en LaburAr App y te escribo porque..."
                 className="mt-1"
               />
               <p className="text-xs text-gray-500 mt-1">

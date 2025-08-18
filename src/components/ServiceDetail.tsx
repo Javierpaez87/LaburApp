@@ -12,7 +12,7 @@ interface ServiceDetailProps {
 
 export const ServiceDetail: React.FC<ServiceDetailProps> = ({ service, onBack }) => {
   const handleWhatsApp = () => {
-    const message = encodeURIComponent(service.whatsappMessage || 'Hola, te contacto por LaburAr para solicitarte un presupuesto por');
+    const message = encodeURIComponent(service.whatsappMessage || 'Hola! Encontré tu perfil en LaburAr App y te escribo porque...');
     const phoneNumber = service.phone.replace(/\D/g, '');
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };

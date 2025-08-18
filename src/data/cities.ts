@@ -560,8 +560,21 @@ export const searchCities = (query: string, limit: number = 10): string[] => {
   
   const normalizedQuery = normalizeText(query);
   
+  // Caso especial para "Junín de los Andes" - solo mostrar esta ciudad cuando busquen "junin"
+  if (normalizedQuery.includes('junin')) {
+    const juninAndes = ARGENTINA_CITIES.find(city => city === 'Junín de los Andes');
+    return juninAndes ? [juninAndes] : [];
+  }
+  
   return ARGENTINA_CITIES
-    .filter(city => normalizeText(city).includes(normalizedQuery))
+    .filter(city => {
+      const normalizedCity = normalizeText(city);
+      // Excluir otros "Junín" cuando no se busca específicamente
+      if (normalizedCity.includes('junin') && city !== 'Junín de los Andes') {
+        return false;
+      }
+      return normalizedCity.includes(normalizedQuery);
+    })
     .slice(0, limit);
 };
 

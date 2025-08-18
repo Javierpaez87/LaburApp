@@ -36,7 +36,7 @@ const convertTimestampToDate = (timestamp: any): Date => {
   return new Date(timestamp);
 };
 
-// Función helper para convertir datos de Firestore a Service
+// Función helper para convertir datos de Firestore a Service  
 const convertFirestoreToService = (doc: any): Service => {
   const data = doc.data();
   return {
@@ -52,7 +52,7 @@ const convertFirestoreToService = (doc: any): Service => {
     description: data.description,
     status: data.isActive ? 'active' : 'inactive',
     createdAt: convertTimestampToDate(data.createdAt),
-    whatsappMessage: data.whatsappMessage || 'Hola, te contacto por LaburAr para solicitarte un presupuesto por'
+    whatsappMessage: data.whatsappMessage || 'Hola! Encontré tu perfil en LaburAr App y te escribo porque...'
   };
 };
 
@@ -80,7 +80,7 @@ export const listServices = async (filters?: {
           description: 'Más de 15 años de experiencia en instalaciones y reparaciones de plomería. Trabajo las 24hs para emergencias. Presupuesto sin cargo.',
           status: 'active' as const,
           createdAt: new Date(),
-          whatsappMessage: 'Hola, te contacto por LaburAr para solicitarte un presupuesto por'
+          whatsappMessage: 'Hola! Encontré tu perfil en LaburAr App y te escribo porque...'
         },
         {
           id: 'mock-2',
@@ -95,7 +95,7 @@ export const listServices = async (filters?: {
           description: 'Especialista en muebles a medida y restauración. Trabajo con maderas nobles y diseños personalizados.',
           status: 'active' as const,
           createdAt: new Date(),
-          whatsappMessage: 'Hola, te contacto por LaburAr para solicitarte un presupuesto por'
+          whatsappMessage: 'Hola! Encontré tu perfil en LaburAr App y te escribo porque...'
         },
         {
           id: 'mock-3',
@@ -110,7 +110,7 @@ export const listServices = async (filters?: {
           description: 'Instalaciones eléctricas residenciales y comerciales. Certificado por el ENRE. Atención de urgencias.',
           status: 'active' as const,
           createdAt: new Date(),
-          whatsappMessage: 'Hola, te contacto por LaburAr para solicitarte un presupuesto por'
+          whatsappMessage: 'Hola! Encontré tu perfil en LaburAr App y te escribo porque...'
         },
         {
           id: 'mock-4',
@@ -125,7 +125,7 @@ export const listServices = async (filters?: {
           description: 'Cortes modernos, coloración y tratamientos capilares. Más de 10 años de experiencia en el rubro.',
           status: 'active' as const,
           createdAt: new Date(),
-          whatsappMessage: 'Hola, te contacto por LaburAr para solicitarte un presupuesto por'
+          whatsappMessage: 'Hola! Encontré tu perfil en LaburAr App y te escribo porque...'
         },
         {
           id: 'mock-5',
@@ -140,7 +140,7 @@ export const listServices = async (filters?: {
           description: 'Catering para eventos, especialidad en comida patagónica. Servicio completo para bodas y celebraciones.',
           status: 'active' as const,
           createdAt: new Date(),
-          whatsappMessage: 'Hola, te contacto por LaburAr para solicitarte un presupuesto por'
+          whatsappMessage: 'Hola! Encontré tu perfil en LaburAr App y te escribo porque...'
         }
       ];
       
@@ -302,7 +302,7 @@ export const createService = async (serviceData: ServiceFormData, userId: string
       description: serviceDataWithoutCustomCategory.description,
       status: 'active' as const,
       createdAt: new Date(),
-      whatsappMessage: serviceDataWithoutCustomCategory.whatsappMessage || 'Hola, te contacto por LaburAr para solicitarte un presupuesto por'
+      whatsappMessage: serviceDataWithoutCustomCategory.whatsappMessage || 'Hola! Encontré tu perfil en LaburAr App y te escribo porque...'
     };
   } catch (error) {
     console.error('Error creating service:', error);
@@ -442,7 +442,7 @@ export const initializeMockData = async (): Promise<void> => {
           phone: '541134567890',
           email: 'juan@plomeriajcp.com',
           categories: ['Plomería', 'Gasista'],
-          whatsappMessage: 'Hola, te contacto por LaburAr para solicitarte un presupuesto por'
+          whatsappMessage: 'Hola! Encontré tu perfil en LaburAr App y te escribo porque...'
         },
         {
           // Required fields for Firestore rules
@@ -462,7 +462,7 @@ export const initializeMockData = async (): Promise<void> => {
           phone: '541145678901',
           email: 'maria@carpinteriamg.com',
           categories: ['Carpintería'],
-          whatsappMessage: 'Hola, te contacto por LaburAr para solicitarte un presupuesto por'
+          whatsappMessage: 'Hola! Encontré tu perfil en LaburAr App y te escribo porque...'
         }
       ];
       
