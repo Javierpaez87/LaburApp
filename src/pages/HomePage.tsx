@@ -127,7 +127,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               onClick={() => window.location.reload()}
               className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer"
             >
-              <img src="/Logo pNG.png" alt="LaburAr App" className="h-[5.712rem] w-auto" />
+              <img src="/LaburApp3.png" alt="LaburAr App" className="h-[5.712rem] w-auto" />
             </button>
 
             <div className="flex items-center gap-3">
