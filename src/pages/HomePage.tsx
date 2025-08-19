@@ -216,7 +216,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         <div className="max-w-7xl mx-auto px-4 py-12 text-center">
           <div className="flex items-center justify-center gap-2 mb-3">
             <img src="/Logo pNG.png" alt="LaburAr" className="h-8 w-auto" />
-            <h2 className="text-xl font-bold">LaburAr app</h2>
+            <h2 className="text-xl font-bold">LaburApp</h2>
           </div>
           <p className="text-white/70 mb-6">
             Conectando personas con los mejores profesionales de servicios
@@ -236,7 +236,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           
           {/* Copyright */}
           <p className="text-white/60 text-sm leading-relaxed">
-            © 2025 LaburAr App. Hecho en Junín de los Andes, Neuquén.<br />
+            © 2025 LaburApp. Hecho en Junín de los Andes, Neuquén.<br />
             Todos los derechos reservados.
           </p>
         </div>
