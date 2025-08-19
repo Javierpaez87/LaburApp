@@ -47,9 +47,15 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
       {/* Header */}
       <div className="text-center mb-3">
         <div className="flex items-center justify-center gap-2 mb-1">
-          <h3 className="font-semibold text-base text-gray-900">
-            {service.name}
-          </h3>
+          {service.company ? (
+            <h3 className="font-semibold text-base text-gray-900">
+              {service.company}
+            </h3>
+          ) : (
+            <h3 className="font-semibold text-base text-gray-900">
+              {service.name}
+            </h3>
+          )}
           {isNew() && (
             <Badge variant="default" className="bg-green-100 text-green-800 text-xs">
               Nuevo
@@ -57,7 +63,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
           )}
         </div>
         {service.company && (
-          <p className="text-sm text-gray-600">{service.company}</p>
+          <p className="text-sm text-gray-600">{service.name}</p>
         )}
       </div>
 
@@ -75,11 +81,6 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
           </Badge>
         ))}
       </div>
-
-      {/* Description */}
-      <p className="text-sm text-gray-600 mb-4 line-clamp-2 text-center">
-        {service.description}
-      </p>
 
       {/* Actions */}
       <div className="space-y-2">
