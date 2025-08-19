@@ -215,7 +215,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       <footer className="bg-slate-950 text-white">
         <div className="max-w-7xl mx-auto px-4 py-12 text-center">
           <div className="flex items-center justify-center gap-2 mb-3">
-            <img src="/LaburApp1.png" alt="LaburAr" className="h-8 w-auto" />
+            <img src="/LaburApp2.png" alt="LaburAr" className="h-8 w-auto" />
             <h2 className="text-xl font-bold">LaburApp</h2>
           </div>
           <p className="text-white/70 mb-6">
