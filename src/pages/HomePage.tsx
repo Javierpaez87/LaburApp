@@ -236,7 +236,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           
           {/* Copyright */}
           <p className="text-white/60 text-sm leading-relaxed">
-            © 2025 LaburApp. Hecho en Junín de los Andes, Neuquén.<br />
+            © 2025 LaburApp. Hecho en Junín de los Andes, Neuquén, Argentina.<br />
             Todos los derechos reservados.
           </p>
         </div>
