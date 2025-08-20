@@ -41,6 +41,29 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
     return categoryIcons[firstCategory as keyof typeof categoryIcons] || MoreHorizontal;
   };
 
+  const getAvatarContent = () => {
+    // Si tiene categorías, mostrar el ícono de la primera categoría
+    if (service.categories && service.categories.length > 0) {
+      const IconComponent = getCategoryIcon();
+      return <IconComponent className="h-7 w-7 text-white" />;
+    }
+    
+    // Si no tiene categorías, mostrar iniciales de la empresa o nombre
+    const displayName = service.company || service.name;
+    const initials = displayName
+      .split(' ')
+      .map(word => word.charAt(0))
+      .join('')
+      .toUpperCase()
+      .slice(0, 2); // Máximo 2 iniciales
+    
+    return (
+      <span className="text-white font-semibold text-lg">
+        {initials}
+      </span>
+    );
+  };
+
   const isNew = () => {
     const twoWeeksAgo = new Date();
     twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
@@ -78,9 +101,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
       <div className="flex justify-center mb-3">
         <div className="w-14 h-14 rounded-full overflow-hidden bg-gray-100">
           <div className="w-full h-full bg-cyan-600 flex items-center justify-center">
-            {React.createElement(getCategoryIcon(), {
-              className: "h-7 w-7 text-white"
-            })}
+            {getAvatarContent()}
           </div>
         </div>
       </div>
@@ -118,29 +139,29 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
 
       {/* Actions */}
       <div className="mt-auto space-y-2">
-        {/* Botón principal de WhatsApp más prominente */}
+        {/* Botón principal de WhatsApp solo con logo */}
         <Button
           onClick={handleWhatsApp}
-          className="w-full bg-green-600 hover:bg-green-700 text-white h-10 font-semibold text-sm shadow-sm flex items-center justify-center"
+          className="w-full bg-green-600 hover:bg-green-700 text-white h-9 font-medium shadow-sm flex items-center justify-center"
         >
-          <MessageCircle className="h-5 w-5 mr-2" />
-          <span className="text-center">Contactar por WhatsApp</span>
+          <MessageCircle className="h-4 w-4 mr-1" />
+          <span className="text-sm">WhatsApp</span>
         </Button>
         
-        {/* Botones secundarios más compactos */}
+        {/* Botones secundarios compactos */}
         <div className="flex gap-2 justify-center">
           <Button
             onClick={handleCall}
             variant="outline"
-            className="flex-1 max-w-[120px] border-gray-300 text-gray-700 hover:bg-gray-50 h-8 text-xs"
+            className="flex-1 max-w-[100px] border-gray-300 text-gray-700 hover:bg-gray-50 h-7 text-xs px-2"
           >
-            <Phone className="h-4 w-4 mr-2" />
+            <Phone className="h-3 w-3 mr-1" />
             Llamar
           </Button>
           <Button
             onClick={() => onViewMore(service.id)}
             variant="outline"
-            className="flex-1 max-w-[120px] border-cyan-300 text-cyan-700 hover:bg-cyan-50 h-8 text-xs"
+            className="flex-1 max-w-[100px] border-cyan-300 text-cyan-700 hover:bg-cyan-50 h-7 text-xs px-2"
           >
             Ver más
           </Button>
