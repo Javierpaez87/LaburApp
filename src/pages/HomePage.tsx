@@ -9,7 +9,7 @@ import { UserMenu } from '@/components/UserMenu';
 import { Service } from '@/types/service';
 import { listServices, initializeMockData } from '@/services/api';
 import { useAuth } from '@/hooks/useAuth';
-import { UserPlus } from 'lucide-react';
+import { UserPlus, MessageCircle } from 'lucide-react';
 interface HomePageProps {
   onViewService: (serviceId: string) => void;
   onPublishService: () => void;
@@ -117,6 +117,12 @@ export const HomePage: React.FC<HomePageProps> = ({
       setAuthLoading(false);
     }
   };
+
+  const handleAdvertisingWhatsApp = () => {
+    const message = encodeURIComponent('Estoy interesado en publicitar en LaburApp');
+    window.open(`https://wa.me/5493517631693?text=${message}`, '_blank');
+  };
+
   return (
     <div className="min-h-screen bg-white text-slate-800">
       {/* Header */}
@@ -130,6 +136,22 @@ export const HomePage: React.FC<HomePageProps> = ({
               <img src="/LaburApp3.png" alt="LaburAr App" className="h-[7rem] w-auto" />
             </button>
 
+            {/* Espacio publicitario */}
+            <div className="hidden md:flex items-center gap-3 bg-gradient-to-r from-green-50 to-green-100 px-4 py-2 rounded-lg border border-green-200">
+              <div className="text-center">
+                <p className="text-xs font-medium text-green-800">Espacio publicitario</p>
+                <p className="text-[10px] text-green-600">¿Querés anunciar aquí?</p>
+              </div>
+              <Button
+                onClick={handleAdvertisingWhatsApp}
+                size="sm"
+                className="bg-green-600 hover:bg-green-700 text-white h-8 px-3 rounded-full"
+              >
+                <MessageCircle className="h-3 w-3 mr-1" />
+                <span className="text-xs">WhatsApp</span>
+              </Button>
+            </div>
+
             <div className="flex items-center gap-3">
               {isAuthenticated ? (
                 <UserMenu 
@@ -140,10 +162,12 @@ export const HomePage: React.FC<HomePageProps> = ({
               ) : (
                 <Button
                   onClick={handlePublishClick}
-                  className="bg-cyan-600 hover:bg-cyan-700 text-white font-semibold rounded-xl px-4 py-2"
+                  className="bg-cyan-600 hover:bg-cyan-700 text-white font-semibold rounded-full w-16 h-16 p-0 flex flex-col items-center justify-center"
                 >
-                  <UserPlus className="h-4 w-4 mr-2" />
-                  Registrar servicio
+                  <UserPlus className="h-4 w-4 mb-0.5" />
+                  <span className="text-[10px] leading-tight text-center">
+                    Registrar<br />servicio
+                  </span>
                 </Button>
               )}
             </div>
