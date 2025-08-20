@@ -40,8 +40,8 @@ export const ServiceList: React.FC<ServiceListProps> = ({
   }
 
   return (
-    <div className={className}>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div className={`${className}`}>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {services.map((service) => (
           <ServiceCard
             key={service.id}
@@ -49,11 +49,6 @@ export const ServiceList: React.FC<ServiceListProps> = ({
             onViewMore={onViewMore}
           />
         ))}
-      </div>
-    </div>
-  );
-};
-
       </div>
     </div>
   );
