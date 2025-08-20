@@ -10,11 +10,11 @@ interface ServiceListProps {
   className?: string;
 }
 
-export const ServiceList: React.FC<ServiceListProps> = ({ 
-  services, 
-  onViewMore, 
+export const ServiceList: React.FC<ServiceListProps> = ({
+  services,
+  onViewMore,
   isLoading = false,
-  className = '' 
+  className = '',
 }) => {
   if (isLoading) {
     return (
@@ -40,8 +40,9 @@ export const ServiceList: React.FC<ServiceListProps> = ({
   }
 
   return (
-    <div className={`${className}`}>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div className={className}>
+      {/* 👇 Base 2 cols (mobile), md=3, lg=4 */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
         {services.map((service) => (
           <ServiceCard
             key={service.id}
