@@ -32,9 +32,16 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
   };
 
   return (
-    <div className={`bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow duration-200 ${className}`}>
+    <div className={`bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow duration-200 relative ${className}`}>
+      {/* Badge "Nuevo" en esquina superior derecha */}
+      {isNew() && (
+        <Badge variant="default" className="absolute top-3 right-3 bg-green-100 text-green-800 text-xs px-2 py-1 z-10">
+          Nuevo
+        </Badge>
+      )}
+
       {/* Profile Image */}
-      <div className="flex justify-center mb-3">
+      <div className="flex justify-center mb-4">
         <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-100">
           <div className="w-full h-full bg-cyan-600 flex items-center justify-center">
             <span className="text-white font-semibold text-lg">
@@ -45,36 +52,29 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
       </div>
 
       {/* Header */}
-      <div className="text-center mb-3">
-        <div className="flex items-center justify-center gap-2 mb-1">
-          {service.company ? (
-            <h3 className="font-semibold text-base text-gray-900">
+      <div className="text-center mb-4">
+        {service.company ? (
+          <>
+            <h3 className="font-semibold text-base text-gray-900 mb-1 leading-tight">
               {service.company}
             </h3>
-          ) : (
-            <h3 className="font-semibold text-base text-gray-900">
-              {service.name}
-            </h3>
-          )}
-          {isNew() && (
-            <Badge variant="default" className="bg-green-100 text-green-800 text-xs">
-              Nuevo
-            </Badge>
-          )}
-        </div>
-        {service.company && (
-          <p className="text-sm text-gray-600">{service.name}</p>
+            <p className="text-sm text-gray-600">{service.name}</p>
+          </>
+        ) : (
+          <h3 className="font-semibold text-base text-gray-900 leading-tight">
+            {service.name}
+          </h3>
         )}
       </div>
 
       {/* Location */}
-      <div className="flex items-center justify-center text-sm text-gray-500 mb-3">
+      <div className="flex items-center justify-center text-sm text-gray-500 mb-4">
         <MapPin className="h-4 w-4 mr-1" />
         <span>{service.neighborhood ? `${service.neighborhood}, ` : ''}{service.city}</span>
       </div>
 
       {/* Categories */}
-      <div className="flex flex-wrap justify-center gap-1 mb-3">
+      <div className="flex flex-wrap justify-center gap-1 mb-6">
         {service.categories.map((category) => (
           <Badge key={category} variant="secondary" className="text-xs">
             {category}
@@ -83,19 +83,22 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
       </div>
 
       {/* Actions */}
-      <div className="space-y-2">
+      <div className="space-y-3">
+        {/* Botón principal de WhatsApp más prominente */}
         <Button
           onClick={handleWhatsApp}
-          className="w-full bg-green-600 hover:bg-green-700 text-white h-12 font-semibold text-sm"
+          className="w-full bg-green-600 hover:bg-green-700 text-white h-11 font-semibold text-sm shadow-sm"
         >
           <MessageCircle className="h-5 w-5 mr-2" />
           Contactar por WhatsApp
         </Button>
+        
+        {/* Botones secundarios más compactos */}
         <div className="flex gap-2">
           <Button
             onClick={handleCall}
             variant="outline"
-            className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50 h-10 text-sm"
+            className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50 h-9 text-xs"
           >
             <Phone className="h-4 w-4 mr-2" />
             Llamar
@@ -103,7 +106,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
           <Button
             onClick={() => onViewMore(service.id)}
             variant="outline"
-            className="flex-1 border-cyan-300 text-cyan-700 hover:bg-cyan-50 h-10 text-sm"
+            className="flex-1 border-cyan-300 text-cyan-700 hover:bg-cyan-50 h-9 text-xs"
           >
             Ver más
           </Button>
