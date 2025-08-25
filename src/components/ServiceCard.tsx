@@ -37,7 +37,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
     'Decoración': Home,
     'Ingeniería': Calculator,
     'Rental': Truck,
-    'Veterinaria': Dog,
+    'Veterinaria': Stethoscope,
     'Salud': Stethoscope,
     'Otros': MoreHorizontal
   };
