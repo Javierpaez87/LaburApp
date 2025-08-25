@@ -140,7 +140,7 @@ export const CitySelect: React.FC<CitySelectProps> = ({
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
           onKeyDown={handleKeyDown}
-          className="pl-12 pr-10 bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
+          className="pl-12 pr-10 h-12 bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
         />
         <ChevronDown className={cn(
           "absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 h-4 w-4 transition-transform",

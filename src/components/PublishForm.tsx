@@ -138,17 +138,20 @@ export const PublishForm: React.FC<PublishFormProps> = ({
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-gray-900">Información personal</h3>
               
-              <div>
+                  Solo números de WhatsApp válidos. Formato argentino: +5491134567890, 1134567890 o 91134567890
                 <Label htmlFor="name">Nombre completo *</Label>
                 <Input
                   id="name"
                   {...register('name')}
-                  placeholder="Tu nombre y apellido"
+                  placeholder="+5491134567890 (solo WhatsApp)"
                   className="mt-1"
                 />
                 {errors.name && (
                   <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
                 )}
+                <p className="text-xs text-blue-600 mt-1">
+                  ⚠️ Solo se permiten números que tengan WhatsApp activo
+                </p>
               </div>
 
               <div>

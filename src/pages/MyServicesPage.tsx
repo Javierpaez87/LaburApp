@@ -92,11 +92,10 @@ export const MyServicesPage: React.FC<MyServicesPageProps> = ({
                 className="flex items-center hover:opacity-80 transition-opacity cursor-pointer"
               >
                 <img 
-                  src="/LaburArApp logo.png" 
+                  src="/LaburApp3.png" 
                   alt="LaburAr" 
-                  className="h-8 w-auto mr-2"
+                  className="h-[7rem] w-auto"
                 />
-                <h1 className="text-xl font-bold text-cyan-500">LaburAr</h1>
               </button>
               <Button
                 onClick={onBack}

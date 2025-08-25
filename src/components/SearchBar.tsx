@@ -186,7 +186,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch, className = '' }
           value={location}
           onChange={setLocation}
           placeholder="Ubicación (opcional)"
-          className="md:w-64"
+          className="h-12 md:w-64"
         />
 
         <Button

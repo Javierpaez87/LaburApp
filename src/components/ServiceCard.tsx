@@ -1,5 +1,5 @@
 import React from 'react';
-import { MessageCircle, Phone, MapPin, Hammer, Wrench, HardHat, Building, Zap, PaintBucket, Flame, Gauge, Leaf, PenTool as Tool, HeartHandshake, Scissors, Car, ChefHat, Scissors as Scissors2, MoreHorizontal } from 'lucide-react';
+import { MessageCircle, Phone, MapPin, Hammer, Wrench, HardHat, Building, Zap, PaintBucket, Flame, Gauge, Leaf, PenTool as Tool, HeartHandshake, Scissors, Car, ChefHat, Scissors as Scissors2, Ruler, Palette, Home, Calculator, Truck, Heart, Stethoscope, MoreHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Service } from '@/types/service';
@@ -32,6 +32,13 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
     'Mecánico': Car,
     'Gastronomía': ChefHat,
     'Peluquería': Scissors2,
+    'Arquitectura': Ruler,
+    'Artes': Palette,
+    'Decoración': Home,
+    'Ingeniería': Calculator,
+    'Rental': Truck,
+    'Veterinaria': Heart,
+    'Salud': Stethoscope,
     'Otros': MoreHorizontal
   };
 
@@ -68,6 +75,16 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
     const twoWeeksAgo = new Date();
     twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
     return service.createdAt > twoWeeksAgo;
+  };
+
+  // Función para determinar el tamaño de fuente basado en la longitud del texto
+  const getTitleFontSize = () => {
+    const displayName = service.company || service.name;
+    const length = displayName.length;
+    
+    if (length <= 20) return 'text-base'; // 1 línea aprox
+    if (length <= 40) return 'text-sm';   // 2 líneas aprox
+    return 'text-xs';                     // 3+ líneas
   };
 
   const handleWhatsApp = () => {
@@ -110,22 +127,16 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
       <div className="text-center mb-3 flex-shrink-0">
         {service.company ? (
           <>
-            <h3 className="font-bold text-base text-gray-900 mb-1 leading-tight">
+            <h3 className={`font-bold ${getTitleFontSize()} text-gray-900 mb-1 leading-tight`}>
               {service.company}
             </h3>
             <p className="text-xs text-gray-600">{service.name}</p>
           </>
         ) : (
-          <h3 className="font-bold text-base text-gray-900 leading-tight">
+          <h3 className={`font-bold ${getTitleFontSize()} text-gray-900 leading-tight`}>
             {service.name}
           </h3>
         )}
-      </div>
-
-      {/* Location */}
-      <div className="flex items-center justify-center text-xs text-gray-500 mb-3 flex-shrink-0">
-        <MapPin className="h-4 w-4 mr-1" />
-        <span>{service.neighborhood ? `${service.neighborhood}, ` : ''}{service.city}</span>
       </div>
 
       {/* Categories */}
@@ -135,6 +146,12 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
             {category}
           </Badge>
         ))}
+      </div>
+
+      {/* Location */}
+      <div className="flex items-center justify-center text-xs text-gray-500 mb-3 flex-shrink-0">
+        <MapPin className="h-4 w-4 mr-1" />
+        <span>{service.city}</span>
       </div>
 
       {/* Actions */}

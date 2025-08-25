@@ -43,5 +43,12 @@ export const SERVICE_CATEGORIES = [
   'Mecánico',
   'Gastronomía',
   'Peluquería',
+  'Arquitectura',
+  'Artes',
+  'Decoración',
+  'Ingeniería',
+  'Rental',
+  'Veterinaria',
+  'Salud',
   'Otros'
 ] as const;
