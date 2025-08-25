@@ -1,5 +1,5 @@
 import React from 'react';
-import { Hammer, Wrench, HardHat, Building, Zap, PaintBucket, Flame, Gauge, Leaf, PenTool as Tool, HeartHandshake, Scissors, Car, ChefHat, Scissors as Scissors2, Ruler, Palette, Home, Calculator, Truck, Heart, Stethoscope, PawPrint, MoreHorizontal } from 'lucide-react';
+import { Hammer, Wrench, HardHat, Building, Zap, PaintBucket, Flame, Gauge, Leaf, PenTool as Tool, HeartHandshake, Scissors, Car, ChefHat, Scissors as Scissors2, Ruler, Palette, Home, Calculator, Truck, Heart, Stethoscope, Heart, MoreHorizontal } from 'lucide-react';
 import { SERVICE_CATEGORIES } from '@/types/service';
 
 interface CategoryGridProps {
@@ -28,7 +28,7 @@ const categoryIcons = {
   'Decoración': Home,
   'Ingeniería': Calculator,
   'Rental': Truck,
-  'Veterinaria': PawPrint,
+  'Veterinaria': Stethoscope,
   'Salud': Stethoscope,
   'Otros': MoreHorizontal
 };
