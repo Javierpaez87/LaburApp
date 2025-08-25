@@ -195,7 +195,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             <UserPlus className="h-5 w-5 mr-2" />
             <div className="text-center leading-tight">
               <div className="font-bold">Registra tus servicios</div>
-              <div className="text-xs md:text-sm font-normal text-white/90">Es gratis y solo tarda 4 minutos</div>
+              <div className="text-xs md:text-sm font-normal text-white/90">Es gratis y solo toma 2 minutos</div>
             </div>
           </Button>
         </div>
