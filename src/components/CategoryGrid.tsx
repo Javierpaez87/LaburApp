@@ -28,7 +28,7 @@ const categoryIcons = {
   'Decoración': Home,
   'Ingeniería': Calculator,
   'Rental': Truck,
-  'Veterinaria': Stethoscope2,
+  'Veterinaria': Heart,
   'Salud': Stethoscope,
   'Otros': MoreHorizontal
 };
