@@ -1,5 +1,5 @@
 import React from 'react';
-import { MessageCircle, Phone, MapPin, Hammer, Wrench, HardHat, Building, Zap, PaintBucket, Flame, Gauge, Leaf, PenTool as Tool, HeartHandshake, Scissors, Car, ChefHat, Scissors as Scissors2, Ruler, Palette, Home, Calculator, Truck, Heart, Stethoscope, MoreHorizontal } from 'lucide-react';
+import { MessageCircle, Phone, MapPin, Hammer, Wrench, HardHat, Building, Zap, PaintBucket, Flame, Gauge, Leaf, PenTool as Tool, HeartHandshake, Scissors, Car, ChefHat, Scissors as Scissors2, Ruler, Palette, Home, Calculator, Truck, Heart, Stethoscope, Monitor, MoreHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Service } from '@/types/service';
@@ -39,6 +39,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
     'Rental': Truck,
     'Veterinaria': Heart,
     'Salud': Stethoscope,
+    'Informática': Monitor,
     'Otros': MoreHorizontal
   };
 

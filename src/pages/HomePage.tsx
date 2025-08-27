@@ -139,11 +139,11 @@ export const HomePage: React.FC<HomePageProps> = ({
             {/* Espacio publicitario - visible en mobile */}
             <button
               onClick={handleAdvertisingWhatsApp}
-              className="flex items-center gap-2 md:gap-3 bg-gradient-to-r from-green-50 to-green-100 px-2 md:px-4 py-1.5 md:py-2 rounded-lg border border-green-200 flex-1 max-w-xs md:max-w-none mx-2 hover:from-green-100 hover:to-green-200 transition-all duration-200 cursor-pointer"
+              className="flex items-center gap-2 md:gap-3 bg-gradient-to-r from-green-50 to-green-100 px-2 md:px-4 py-3 md:py-2 rounded-lg border border-green-200 flex-1 max-w-xs md:max-w-none mx-2 hover:from-green-100 hover:to-green-200 transition-all duration-200 cursor-pointer"
             >
               <div className="text-center flex-1">
-                <p className="text-[10px] md:text-xs font-medium text-green-800">Espacio publicitario</p>
-                <p className="text-[8px] md:text-[10px] text-green-600">¿Querés anunciar aquí?</p>
+                <p className="text-xs md:text-xs font-medium text-green-800 leading-tight">Espacio publicitario</p>
+                <p className="text-[10px] md:text-[10px] text-green-600 leading-tight">¿Querés anunciar aquí?</p>
               </div>
               <MessageCircle className="h-4 w-4 md:h-5 md:w-5 text-green-600 flex-shrink-0" />
             </button>
