@@ -66,6 +66,7 @@ export const listServices = async (filters?: {
     // In development, return mock data if Firestore is not accessible
     if (process.env.NODE_ENV === 'development') {
       console.log('Using mock data for development');
+      console.log('Applied filters:', filters);
       const mockServices: Service[] = [
         {
           id: 'mock-1',
@@ -106,7 +107,7 @@ export const listServices = async (filters?: {
           neighborhood: 'Nueva Córdoba',
           phone: '543514567890',
           email: 'carlos@electricidadcr.com',
-          categories: ['Electricista'],
+          categories: ['Electricidad'],
           description: 'Instalaciones eléctricas residenciales y comerciales. Certificado por el ENRE. Atención de urgencias.',
           status: 'active' as const,
           createdAt: new Date(),
@@ -141,31 +142,70 @@ export const listServices = async (filters?: {
           status: 'active' as const,
           createdAt: new Date(),
           whatsappMessage: 'Hola! Encontré tu perfil en LaburAr App y te escribo porque...'
+        },
+        {
+          id: 'mock-6',
+          userId: 'mock-user-6',
+          name: 'Diego Fernández',
+          company: 'Ingeniería DF',
+          city: 'Buenos Aires',
+          neighborhood: 'Recoleta',
+          phone: '541156789012',
+          email: 'diego@ingenieriadf.com',
+          categories: ['Ingeniería'],
+          description: 'Proyectos de ingeniería civil y estructural. Cálculos estructurales, planos municipales y dirección de obra.',
+          status: 'active' as const,
+          createdAt: new Date(),
+          whatsappMessage: 'Hola! Encontré tu perfil en LaburAr App y te escribo porque...'
+        },
+        {
+          id: 'mock-7',
+          userId: 'mock-user-7',
+          name: 'Luis Herrera',
+          company: 'Herrería Artística LH',
+          city: 'Córdoba',
+          neighborhood: 'Güemes',
+          phone: '543515678901',
+          email: 'luis@herrerialth.com',
+          categories: ['Herrería'],
+          description: 'Portones, rejas, escaleras y estructuras metálicas. Trabajos artísticos en hierro forjado y soldadura especializada.',
+          status: 'active' as const,
+          createdAt: new Date(),
+          whatsappMessage: 'Hola! Encontré tu perfil en LaburAr App y te escribo porque...'
         }
       ];
       
       let services = [...mockServices];
+      console.log('Total mock services:', services.length);
       
       // Apply filters
       if (filters?.search) {
         const searchLower = filters.search.toLowerCase();
+        console.log('Applying search filter:', searchLower);
         services = services.filter(service => 
           service.name.toLowerCase().includes(searchLower) ||
           service.company?.toLowerCase().includes(searchLower) ||
-          service.description.toLowerCase().includes(searchLower)
+          service.description.toLowerCase().includes(searchLower) ||
+          service.categories.some(cat => cat.toLowerCase().includes(searchLower))
         );
+        console.log('Services after search filter:', services.length);
       }
       
       if (filters?.category) {
+        console.log('Applying category filter:', filters.category);
+        console.log('Available categories in services:', services.map(s => s.categories).flat());
         services = services.filter(service =>
           service.categories.includes(filters.category!)
         );
+        console.log('Services after category filter:', services.length);
       }
       
       if (filters?.city) {
+        console.log('Applying city filter:', filters.city);
         services = services.filter(service =>
           service.city.toLowerCase().includes(filters.city!.toLowerCase())
         );
+        console.log('Services after city filter:', services.length);
       }
       
       if (filters?.neighborhood) {
@@ -174,6 +214,7 @@ export const listServices = async (filters?: {
         );
       }
       
+      console.log('Final filtered services:', services.length);
       return services;
     }
     

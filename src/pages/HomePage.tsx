@@ -29,6 +29,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>();
   const [selectedCity, setSelectedCity] = useState<string>();
+  const [hasSearched, setHasSearched] = useState(false);
 
   const loadServices = async () => {
     setIsLoading(true);
@@ -45,6 +46,9 @@ export const HomePage: React.FC<HomePageProps> = ({
       };
       const data = await listServices(filters);
       setServices(data);
+      
+      // Marcar que se ha realizado una búsqueda si hay filtros activos
+      setHasSearched(!!(searchQuery || selectedCategory || selectedCity));
     } catch (error) {
       console.error('Error loading services:', error);
     } finally {
@@ -59,14 +63,19 @@ export const HomePage: React.FC<HomePageProps> = ({
   const handleSearch = (query: string, location?: string) => {
     setSearchQuery(query);
     if (location) setSelectedCity(location);
+    setHasSearched(true);
   };
 
-  const handleCategorySelect = (category: string) => setSelectedCategory(category);
+  const handleCategorySelect = (category: string) => {
+    setSelectedCategory(category);
+    setHasSearched(true);
+  };
 
   const handleClearFilters = () => {
     setSelectedCategory(undefined);
     setSelectedCity(undefined);
     setSearchQuery('');
+    setHasSearched(false);
   };
 
   const handlePublishClick = () => {
@@ -205,7 +214,14 @@ export const HomePage: React.FC<HomePageProps> = ({
       <section className="py-8 md:py-14 bg-laburar-50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <h2 className="text-2xl font-bold">Profesionales disponibles</h2>
+            <h2 className="text-2xl font-bold">
+              {hasSearched && services.length === 0 
+                ? 'Servicios que pueden interesarte' 
+                : hasSearched 
+                  ? `Resultados encontrados (${services.length})`
+                  : 'Profesionales disponibles'
+              }
+            </h2>
             <FilterBar
               selectedCategory={selectedCategory}
               selectedCity={selectedCity}
@@ -218,13 +234,31 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-soft">
             <ServiceList services={services} onViewMore={onViewService} isLoading={isLoading} />
           </div>
+          
+          {/* Mostrar mensaje cuando no hay resultados de búsqueda */}
+          {hasSearched && services.length === 0 && !isLoading && (
+            <div className="text-center py-8">
+              <p className="text-gray-600 mb-4">
+                No encontramos servicios que coincidan con tu búsqueda.
+              </p>
+              <Button
+                onClick={handleClearFilters}
+                variant="outline"
+                className="text-cyan-600 border-cyan-300 hover:bg-cyan-50"
+              >
+                Ver todos los servicios
+              </Button>
+            </div>
+          )}
         </div>
       </section>
 
       {/* Categorías */}
-      <section className="py-8 md:py-14 bg-white">
+      <section className={`py-8 md:py-14 bg-white ${hasSearched && services.length === 0 ? 'hidden' : ''}`}>
         <div className="max-w-7xl mx-auto px-4">
-          <h3 className="text-xl font-semibold mb-6">Servicios que pueden interesarte cerca tuyo</h3>
+          <h3 className="text-xl font-semibold mb-6">
+            {hasSearched ? 'Otros servicios que pueden interesarte' : 'Servicios que pueden interesarte cerca tuyo'}
+          </h3>
           <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-soft">
             <CategoryGrid onCategorySelect={handleCategorySelect} />
           </div>

@@ -20,7 +20,33 @@ const formSchema = z.object({
   neighborhood: z.string().optional(),
   phone: z.string()
     .min(10, 'El teléfono debe tener al menos 10 dígitos')
-    .regex(/^(\+54|54)?9?[0-9]{8,10}$/, 'Formato de teléfono argentino inválido. Ej: +5491134567890 o 1134567890'),
+    .refine((phone) => {
+      // Limpiar el número de espacios, guiones y paréntesis
+      const cleanPhone = phone.replace(/[\s\-\(\)]/g, '');
+      
+      // Patrones válidos para WhatsApp Argentina
+      const patterns = [
+        /^\+549[0-9]{10}$/,           // +549XXXXXXXXXX (formato internacional completo)
+        /^549[0-9]{10}$/,             // 549XXXXXXXXXX (sin +)
+        /^\+54911[0-9]{8}$/,          // +54911XXXXXXXX (Buenos Aires con código de área)
+        /^54911[0-9]{8}$/,            // 54911XXXXXXXX (Buenos Aires sin +)
+        /^\+54[0-9]{2}15[0-9]{8}$/,   // +54XX15XXXXXXXX (interior con 15)
+        /^[0-9]{2}15[0-9]{8}$/,       // XX15XXXXXXXX (interior con 15, sin código país)
+        /^15[0-9]{8}$/,               // 15XXXXXXXX (celular directo)
+        /^9[0-9]{10}$/                // 9XXXXXXXXXX (formato móvil)
+      ];
+      
+      const isValid = patterns.some(pattern => pattern.test(cleanPhone));
+      
+      if (!isValid) {
+        return false;
+      }
+      
+      // Verificar que tenga la longitud correcta después de limpiar
+      return cleanPhone.length >= 10 && cleanPhone.length <= 15;
+    }, {
+      message: 'Formato de teléfono inválido para WhatsApp. Ejemplos válidos: +5491134567890, +549341234567, 1134567890, 15XXXXXXXX'
+    }),
   email: z.string().email('Email inválido').optional().or(z.literal('')),
   categories: z.array(z.string()).min(1, 'Selecciona al menos una categoría'),
   description: z.string().min(50, 'La descripción debe tener al menos 50 caracteres'),
@@ -222,17 +248,20 @@ export const PublishForm: React.FC<PublishFormProps> = ({
                 <div>
                   <Label htmlFor="phone">Teléfono/WhatsApp *</Label>
                   <p className="text-xs text-gray-500 mb-1">
-                    Ej: +5491134567890, 1134567890 o 91134567890
+                    Debe ser un número válido para WhatsApp. Ej: +5491134567890, 1134567890, 15XXXXXXXX
                   </p>
                   <Input
                     id="phone"
                     {...register('phone')}
-                    placeholder="+5491134567890"
+                    placeholder="+5491134567890 o 1134567890"
                     className="mt-1"
                   />
                   {errors.phone && (
                     <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
                   )}
+                  <p className="text-xs text-gray-400 mt-1">
+                    ⚠️ Solo se aceptan números que WhatsApp pueda reconocer automáticamente
+                  </p>
                 </div>
 
                 <div>
