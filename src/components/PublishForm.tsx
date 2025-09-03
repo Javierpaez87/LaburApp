@@ -222,7 +222,7 @@ export const PublishForm: React.FC<PublishFormProps> = ({
                 <div>
                   <Label htmlFor="phone">Teléfono/WhatsApp *</Label>
                   <p className="text-xs text-gray-500 mb-1">
-                    Formato argentino. Ej: +5491134567890, 1134567890 o 91134567890
+                    Ej: +5491134567890, 1134567890 o 91134567890
                   </p>
                   <Input
                     id="phone"
