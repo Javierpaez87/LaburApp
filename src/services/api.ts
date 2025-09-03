@@ -182,6 +182,7 @@ export const listServices = async (filters?: {
       if (filters?.search) {
         const searchLower = filters.search.toLowerCase();
         console.log('Applying search filter:', searchLower);
+        console.log('Services before search filter:', services.map(s => ({ name: s.name, categories: s.categories })));
         services = services.filter(service => 
           service.name.toLowerCase().includes(searchLower) ||
           service.company?.toLowerCase().includes(searchLower) ||
@@ -189,11 +190,11 @@ export const listServices = async (filters?: {
           service.categories.some(cat => cat.toLowerCase().includes(searchLower))
         );
         console.log('Services after search filter:', services.length);
+        console.log('Filtered services:', services.map(s => ({ name: s.name, categories: s.categories })));
       }
       
       if (filters?.category) {
         console.log('Applying category filter:', filters.category);
-        console.log('Available categories in services:', services.map(s => s.categories).flat());
         services = services.filter(service =>
           service.categories.includes(filters.category!)
         );
@@ -236,7 +237,8 @@ export const listServices = async (filters?: {
         services = services.filter(service => 
           service.name.toLowerCase().includes(searchLower) ||
           service.company?.toLowerCase().includes(searchLower) ||
-          service.description.toLowerCase().includes(searchLower)
+          service.description.toLowerCase().includes(searchLower) ||
+          service.categories.some(cat => cat.toLowerCase().includes(searchLower))
         );
       }
       

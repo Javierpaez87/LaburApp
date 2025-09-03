@@ -29,10 +29,10 @@ export const ServiceList: React.FC<ServiceListProps> = ({
       <div className="text-center py-12">
         <div className="max-w-md mx-auto">
           <h3 className="text-lg font-semibold text-gray-900 mb-2">
-            No hay servicios disponibles
+            No se encontraron servicios
           </h3>
           <p className="text-gray-600">
-            Sé el primero en publicar tu servicio en esta categoría.
+            Intenta con otros términos de búsqueda o revisa los filtros aplicados.
           </p>
         </div>
       </div>

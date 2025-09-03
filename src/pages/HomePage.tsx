@@ -254,10 +254,10 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* Categorías */}
-      <section className={`py-8 md:py-14 bg-white ${hasSearched && services.length === 0 ? 'hidden' : ''}`}>
+      <section className="py-8 md:py-14 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <h3 className="text-xl font-semibold mb-6">
-            {hasSearched ? 'Otros servicios que pueden interesarte' : 'Servicios que pueden interesarte cerca tuyo'}
+            Servicios que pueden interesarte cerca tuyo
           </h3>
           <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-soft">
             <CategoryGrid onCategorySelect={handleCategorySelect} />
