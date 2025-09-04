@@ -12,7 +12,7 @@ interface ServiceDetailProps {
 
 export const ServiceDetail: React.FC<ServiceDetailProps> = ({ service, onBack }) => {
   const handleWhatsApp = () => {
-    const message = encodeURIComponent(service.whatsappMessage || 'Hola! Encontré tu perfil en LaburAr App y te escribo porque...');
+    const message = encodeURIComponent(service.whatsappMessage || `Hola ${service.company || service.name}! Encontré tu perfil en LaburApp y te contacto por`);
     const phoneNumber = service.phone.replace(/\D/g, '');
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
@@ -43,11 +43,11 @@ export const ServiceDetail: React.FC<ServiceDetailProps> = ({ service, onBack })
             className="flex items-center hover:opacity-80 transition-opacity cursor-pointer"
           >
             <img 
-              src="/LaburArApp logo.png" 
-              alt="LaburAr" 
+              src="/LaburApp3.png" 
+              alt="LaburApp" 
               className="h-8 w-auto mr-2"
             />
-            <h1 className="text-xl font-bold text-cyan-500">LaburAr</h1>
+            <h1 className="text-xl font-bold text-cyan-500">LaburApp</h1>
           </button>
         </div>
       </header>

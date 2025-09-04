@@ -65,11 +65,11 @@ export const PublishPage: React.FC<PublishPageProps> = ({
               className="flex items-center hover:opacity-80 transition-opacity cursor-pointer"
             >
               <img 
-                src="/LaburArApp logo.png" 
-                alt="LaburAr" 
+                src="/LaburApp3.png" 
+                alt="LaburApp" 
                 className="h-8 w-auto mr-2"
               />
-              <h1 className="text-2xl font-bold text-cyan-500">LaburAr</h1>
+              <h1 className="text-2xl font-bold text-cyan-500">LaburApp</h1>
             </button>
           </div>
         </div>

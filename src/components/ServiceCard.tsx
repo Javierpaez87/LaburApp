@@ -89,7 +89,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
   };
 
   const handleWhatsApp = () => {
-    const message = encodeURIComponent(service.whatsappMessage || 'Hola! Encontré tu perfil en LaburAr App y te escribo porque...');
+    const message = encodeURIComponent(service.whatsappMessage || `Hola ${service.company || service.name}! Encontré tu perfil en LaburApp y te contacto por`);
     const phoneNumber = service.phone.replace(/\D/g, '');
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };

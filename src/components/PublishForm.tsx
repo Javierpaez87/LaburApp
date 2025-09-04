@@ -82,7 +82,7 @@ export const PublishForm: React.FC<PublishFormProps> = ({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
       categories: [],
-      whatsappMessage: 'Hola! Encontré tu perfil en LaburAr App y te escribo porque...',
+      whatsappMessage: '',
       customCategory: ''
     }
   });
@@ -337,11 +337,11 @@ export const PublishForm: React.FC<PublishFormProps> = ({
               <Input
                 id="whatsappMessage"
                 {...register('whatsappMessage')}
-                placeholder="Hola! Encontré tu perfil en LaburAr App y te escribo porque..."
+                placeholder="Hola [nombre]! Encontré tu perfil en LaburApp y te contacto por"
                 className="mt-1"
               />
               <p className="text-xs text-gray-500 mt-1">
-                Este será el mensaje que los clientes verán al contactarte por WhatsApp
+                Si no completas este campo, se usará un mensaje automático con tu nombre/empresa
               </p>
             </div>
 

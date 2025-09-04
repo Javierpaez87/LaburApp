@@ -81,7 +81,7 @@ export const listServices = async (filters?: {
           description: 'Más de 15 años de experiencia en instalaciones y reparaciones de plomería. Trabajo las 24hs para emergencias. Presupuesto sin cargo.',
           status: 'active' as const,
           createdAt: new Date(),
-          whatsappMessage: 'Hola! Encontré tu perfil en LaburAr App y te escribo porque...'
+          whatsappMessage: 'Hola Plomería JCP! Encontré tu perfil en LaburApp y te contacto por'
         },
         {
           id: 'mock-2',
@@ -96,7 +96,7 @@ export const listServices = async (filters?: {
           description: 'Especialista en muebles a medida y restauración. Trabajo con maderas nobles y diseños personalizados.',
           status: 'active' as const,
           createdAt: new Date(),
-          whatsappMessage: 'Hola! Encontré tu perfil en LaburAr App y te escribo porque...'
+          whatsappMessage: 'Hola Carpintería Artesanal MG! Encontré tu perfil en LaburApp y te contacto por'
         },
         {
           id: 'mock-3',
@@ -111,7 +111,7 @@ export const listServices = async (filters?: {
           description: 'Instalaciones eléctricas residenciales y comerciales. Certificado por el ENRE. Atención de urgencias.',
           status: 'active' as const,
           createdAt: new Date(),
-          whatsappMessage: 'Hola! Encontré tu perfil en LaburAr App y te escribo porque...'
+          whatsappMessage: 'Hola Electricidad CR! Encontré tu perfil en LaburApp y te contacto por'
         },
         {
           id: 'mock-4',
@@ -126,7 +126,7 @@ export const listServices = async (filters?: {
           description: 'Cortes modernos, coloración y tratamientos capilares. Más de 10 años de experiencia en el rubro.',
           status: 'active' as const,
           createdAt: new Date(),
-          whatsappMessage: 'Hola! Encontré tu perfil en LaburAr App y te escribo porque...'
+          whatsappMessage: 'Hola Belleza Total! Encontré tu perfil en LaburApp y te contacto por'
         },
         {
           id: 'mock-5',
@@ -171,7 +171,7 @@ export const listServices = async (filters?: {
           description: 'Portones, rejas, escaleras y estructuras metálicas. Trabajos artísticos en hierro forjado y soldadura especializada.',
           status: 'active' as const,
           createdAt: new Date(),
-          whatsappMessage: 'Hola! Encontré tu perfil en LaburAr App y te escribo porque...'
+          whatsappMessage: 'Hola Herrería Artística LH! Encontré tu perfil en LaburApp y te contacto por'
         }
       ];
       
@@ -318,7 +318,7 @@ export const createService = async (serviceData: ServiceFormData, userId: string
       company: serviceDataWithoutCustomCategory.company || '',
       neighborhood: serviceDataWithoutCustomCategory.neighborhood || '',
       email: serviceDataWithoutCustomCategory.email || '',
-      whatsappMessage: serviceDataWithoutCustomCategory.whatsappMessage || 'Hola, te contacto por LaburAr para solicitarte un presupuesto por'
+      whatsappMessage: serviceDataWithoutCustomCategory.whatsappMessage || `Hola ${serviceDataWithoutCustomCategory.company || serviceDataWithoutCustomCategory.name}! Encontré tu perfil en LaburApp y te contacto por`
     };
     
     console.log('=== Final data to send to Firestore ===');
@@ -345,7 +345,7 @@ export const createService = async (serviceData: ServiceFormData, userId: string
       description: serviceDataWithoutCustomCategory.description,
       status: 'active' as const,
       createdAt: new Date(),
-      whatsappMessage: serviceDataWithoutCustomCategory.whatsappMessage || 'Hola! Encontré tu perfil en LaburAr App y te escribo porque...'
+      whatsappMessage: serviceDataWithoutCustomCategory.whatsappMessage || `Hola ${serviceDataWithoutCustomCategory.company || serviceDataWithoutCustomCategory.name}! Encontré tu perfil en LaburApp y te contacto por`
     };
   } catch (error) {
     console.error('Error creating service:', error);
@@ -505,7 +505,7 @@ export const initializeMockData = async (): Promise<void> => {
           phone: '541145678901',
           email: 'maria@carpinteriamg.com',
           categories: ['Carpintería'],
-          whatsappMessage: 'Hola! Encontré tu perfil en LaburAr App y te escribo porque...'
+          whatsappMessage: 'Hola Carpintería Artesanal MG! Encontré tu perfil en LaburApp y te contacto por'
         }
       ];
       
